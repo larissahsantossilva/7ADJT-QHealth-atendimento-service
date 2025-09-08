@@ -1,3 +1,12 @@
+-- Criação do schema
+CREATE SCHEMA IF NOT EXISTS atendimento;
+
+-- Garante que tudo será criado dentro do schema medisync
+SET search_path TO atendimento;
+
+-- Criação da extensão para UUID
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 -- Criação da tabela de fila
 CREATE TABLE fila (
     id UUID PRIMARY KEY,
@@ -25,4 +34,4 @@ CREATE TABLE atendimento (
 
 -- Indexes para performance
 CREATE INDEX idx_fila ON fila (id);
-CREATE INDEX idx_atendimento ON fila (atendimento);
+CREATE INDEX idx_atendimento ON atendimento (id);
