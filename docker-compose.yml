@@ -1,18 +1,19 @@
-version: "3.9"
-
 services:
-  postgres:
+  atendimento-db:
     image: postgres:17-alpine
-    container_name: postgres_db
-    restart: always
+    container_name: atendimento_db
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_DB: atendimento_db
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    restart: always
+    networks: # Adicionado à rede
+      - app-network
+
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
@@ -27,26 +28,42 @@ services:
       interval: 10s
       timeout: 5s
     restart: always
+    networks: # Adicionado à rede
+      - app-network
+
   app:
     depends_on:
       - rabbitmq
-      - postgres
+      - atendimento-db
     build:
       context: .
       dockerfile: Dockerfile
     container_name: java_app
     image: app
     environment:
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      # --- CORREÇÃO CRUCIAL AQUI ---
+      # Dentro da rede Docker, o host da base de dados é o nome do serviço, não "postgres".
+      SPRING_DATASOURCE_URL: jdbc:postgresql://atendimento-db:5432/atendimento_db
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
       RABBITMQ_HOST: rabbitmq
-      RABBITMQ_PORT: 15672
+      RABBITMQ_PORT: 5672 # Porta correta para comunicação do serviço
       RABBITMQ_USER: guest
       RABBITMQ_PASSWORD: guest
+      _JAVA_OPTIONS: >
+        -Xdebug
+        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
     ports:
-      - 8080:8080
+      - "8080:8080"
+      - "5005:5005"
+    networks: # Adicionado à rede
+      - app-network
+
 volumes:
   postgres-data:
+
+# --- REDE ADICIONADA ---
+# Cria uma rede dedicada para que os serviços possam comunicar entre si.
+networks:
+  app-network:
+    driver: bridge
