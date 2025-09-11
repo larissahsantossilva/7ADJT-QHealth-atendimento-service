@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    public static final String QUEUE_NAME = "fila-novo-atendimento";
+    public static final String QUEUE_NAME = "novo.atendimento.queue";
     public static final String EXCHANGE_NAME = "exchange-principal";
     public static final String ROUTING_KEY = "atendimento.routing.key";
 

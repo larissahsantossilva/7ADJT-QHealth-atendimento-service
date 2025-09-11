@@ -14,11 +14,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+import static br.com.fiap.qhealth.ms.atendimento_service.config.RabbitMQConfig.QUEUE_NAME;
+
 @Service
 public class AtendimentoListener {
 
     private static final Logger log = LoggerFactory.getLogger(AtendimentoListener.class);
-    public static final String QUEUE_NAME = "fila-novo-atendimento";
     private final AtendimentoService atendimentoService;
     private final FilaService filaService;
 
@@ -31,13 +32,7 @@ public class AtendimentoListener {
     public void escutarMensagem(AtendimentoRequestJson atendimentoRequestJson) {
         log.info(">>> Mensagem recebida da fila [{}]: '{}'", QUEUE_NAME, atendimentoRequestJson);
         List<Fila> filas = filaService.buscarFilas();
-        //Fila fila = filaService.buscarFila(UUID.fromString("c1b2a3d4-e5f6-a7b8-c9d0-a1b2c3d4e5f6"));
-        Fila fila = Fila.builder()
-                .id(UUID.fromString("c1b2a3d4-e5f6-a7b8-c9d0-a1b2c3d4e5f6"))
-                .idUnidadeSaude(UUID.fromString("c1b2a3d4-e5f6-a7b8-c9d0-a1b2c3d4e5f6"))
-                .nomeFila("Padrão")
-                .tipoFila("NORMAL")
-            .build();
+        Fila fila = filaService.buscarFila(UUID.fromString("c1b2a3d4-e5f6-a7b8-c9d0-a1b2c3d4e5f6"));//Falta lógica para escolher a fila correta
         List<Atendimento> atendimentos = atendimentoService.buscarAtendimentos();
         Atendimento atendimento = atendimentoService.salvarAtendimento(AtendimentoUtils.converterParaAtendimento(atendimentoRequestJson), fila);
         log.info(">>> Atendimento salvo: {}", atendimento);

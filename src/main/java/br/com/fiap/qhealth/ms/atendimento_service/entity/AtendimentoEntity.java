@@ -21,13 +21,13 @@ public class AtendimentoEntity {
     @Column(name = "id", nullable = false, unique = true)
     private UUID id;
 
-    @Column(name = "id_paciente", nullable = false)
+    @Column(name = "paciente_id", nullable = false)
     private UUID idPaciente;
 
     @Column(name = "posicao_fila", nullable = false)
     private Integer posicaoFila;
 
-    @Column(name = "id_anamnese", nullable = false)
+    @Column(name = "anamnese_id", nullable = false)
     private UUID idAnamnese;
 
     @CreationTimestamp
@@ -39,6 +39,6 @@ public class AtendimentoEntity {
     private LocalDateTime dataUltimaAlteracao;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_fila", nullable = false)
+    @JoinColumn(name = "fila_id", nullable = false)
     private FilaEntity fila;
 }

@@ -1,6 +1,7 @@
 package br.com.fiap.qhealth.ms.atendimento_service.utils;
 
 import br.com.fiap.qhealth.ms.atendimento_service.domain.Atendimento;
+import br.com.fiap.qhealth.ms.atendimento_service.domain.Fila;
 import br.com.fiap.qhealth.ms.atendimento_service.entity.AtendimentoEntity;
 import br.com.fiap.qhealth.ms.atendimento_service.listener.json.AtendimentoRequestJson;
 
@@ -17,15 +18,17 @@ public class AtendimentoUtils {
             .build();
     }
 
-    public static AtendimentoEntity converterParaAtendimentoEntity(Atendimento atendimento) {
-        return AtendimentoEntity.builder()
+    public static AtendimentoEntity converterParaAtendimentoEntity(Atendimento atendimento, Fila fila) {
+        AtendimentoEntity atendimentoEntity = AtendimentoEntity.builder()
                 .id(atendimento.getId())
                 .idAnamnese(atendimento.getIdAnamnese())
                 .idPaciente(atendimento.getIdPaciente())
+                .fila(FilaUtils.converterParaFilaEntity(fila))
                 .posicaoFila(atendimento.getPosicaoFila())
                 .dataCriacao(atendimento.getDataCriacao())
                 .dataUltimaAlteracao(atendimento.getDataUltimaAlteracao())
             .build();
+        return atendimentoEntity;
     }
 
     public static Atendimento converterParaAtendimento(AtendimentoEntity atendimentoEntity) {

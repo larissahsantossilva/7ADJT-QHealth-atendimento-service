@@ -21,10 +21,12 @@ public class AtendimentoService {
 
     public final Logger logger = LoggerFactory.getLogger(AtendimentoService.class);
     public final AtendimentoRepository atendimentoRepository;
+    public final FilaService filaService;
 
     public Atendimento salvarAtendimento(Atendimento atendimento, Fila fila) {
+        Fila fila1 = filaService.buscarFila(fila.getId());
         atendimento.setIdFila(fila.getId());
-        AtendimentoEntity atendimentoEntity = atendimentoRepository.save(converterParaAtendimentoEntity(atendimento));
+        AtendimentoEntity atendimentoEntity = atendimentoRepository.save(converterParaAtendimentoEntity(atendimento, fila1));
         logger.info("Atendimento salvo com sucesso: {}", atendimentoEntity);
         return converterParaAtendimento(atendimentoEntity);
     }
