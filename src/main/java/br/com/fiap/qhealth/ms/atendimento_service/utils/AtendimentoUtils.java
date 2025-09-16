@@ -1,14 +1,14 @@
 package br.com.fiap.qhealth.ms.atendimento_service.utils;
 
-import br.com.fiap.qhealth.ms.atendimento_service.domain.Atendimento;
-import br.com.fiap.qhealth.ms.atendimento_service.domain.Fila;
-import br.com.fiap.qhealth.ms.atendimento_service.entity.AtendimentoEntity;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.AtendimentoDTO;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDTO;
+import br.com.fiap.qhealth.ms.atendimento_service.model.Atendimento;
 import br.com.fiap.qhealth.ms.atendimento_service.listener.json.AtendimentoRequestJson;
 
 public class AtendimentoUtils {
 
-    public static Atendimento converterParaAtendimento(AtendimentoRequestJson atendimentoRequestJson) {
-        return Atendimento.builder()
+    public static AtendimentoDTO converterParaAtendimentoDTO(AtendimentoRequestJson atendimentoRequestJson) {
+        return AtendimentoDTO.builder()
                 .id(atendimentoRequestJson.id())
                 .idAnamnese(atendimentoRequestJson.idAnamnese())
                 .idPaciente(atendimentoRequestJson.idPaciente())
@@ -18,27 +18,27 @@ public class AtendimentoUtils {
             .build();
     }
 
-    public static AtendimentoEntity converterParaAtendimentoEntity(Atendimento atendimento, Fila fila) {
-        AtendimentoEntity atendimentoEntity = AtendimentoEntity.builder()
+    public static Atendimento converterParaAtendimento(AtendimentoDTO atendimentoDTO, FilaDTO filaDTO) {
+        Atendimento atendimento = Atendimento.builder()
+                .id(atendimentoDTO.getId())
+                .idAnamnese(atendimentoDTO.getIdAnamnese())
+                .idPaciente(atendimentoDTO.getIdPaciente())
+                .fila(FilaUtils.converterParaFila(filaDTO))
+                .posicaoFila(atendimentoDTO.getPosicaoFila())
+                .dataCriacao(atendimentoDTO.getDataCriacao())
+                .dataUltimaAlteracao(atendimentoDTO.getDataUltimaAlteracao())
+            .build();
+        return atendimento;
+    }
+
+    public static AtendimentoDTO converterParaAtendimentoDTO(Atendimento atendimento) {
+        return AtendimentoDTO.builder()
                 .id(atendimento.getId())
                 .idAnamnese(atendimento.getIdAnamnese())
                 .idPaciente(atendimento.getIdPaciente())
-                .fila(FilaUtils.converterParaFilaEntity(fila))
                 .posicaoFila(atendimento.getPosicaoFila())
                 .dataCriacao(atendimento.getDataCriacao())
                 .dataUltimaAlteracao(atendimento.getDataUltimaAlteracao())
-            .build();
-        return atendimentoEntity;
-    }
-
-    public static Atendimento converterParaAtendimento(AtendimentoEntity atendimentoEntity) {
-        return Atendimento.builder()
-                .id(atendimentoEntity.getId())
-                .idAnamnese(atendimentoEntity.getIdAnamnese())
-                .idPaciente(atendimentoEntity.getIdPaciente())
-                .posicaoFila(atendimentoEntity.getPosicaoFila())
-                .dataCriacao(atendimentoEntity.getDataCriacao())
-                .dataUltimaAlteracao(atendimentoEntity.getDataUltimaAlteracao())
             .build();
     }
 }

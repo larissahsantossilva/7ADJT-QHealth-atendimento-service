@@ -1,8 +1,8 @@
 package br.com.fiap.qhealth.ms.atendimento_service.service;
 
-import br.com.fiap.qhealth.ms.atendimento_service.domain.Atendimento;
-import br.com.fiap.qhealth.ms.atendimento_service.domain.Fila;
-import br.com.fiap.qhealth.ms.atendimento_service.entity.AtendimentoEntity;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.AtendimentoDTO;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDTO;
+import br.com.fiap.qhealth.ms.atendimento_service.model.Atendimento;
 import br.com.fiap.qhealth.ms.atendimento_service.repository.AtendimentoRepository;
 import br.com.fiap.qhealth.ms.atendimento_service.utils.AtendimentoUtils;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static br.com.fiap.qhealth.ms.atendimento_service.utils.AtendimentoUtils.converterParaAtendimento;
-import static br.com.fiap.qhealth.ms.atendimento_service.utils.AtendimentoUtils.converterParaAtendimentoEntity;
+import static br.com.fiap.qhealth.ms.atendimento_service.utils.AtendimentoUtils.converterParaAtendimentoDTO;
 
 @RequiredArgsConstructor
 @Service
@@ -23,17 +23,17 @@ public class AtendimentoService {
     public final AtendimentoRepository atendimentoRepository;
     public final FilaService filaService;
 
-    public Atendimento salvarAtendimento(Atendimento atendimento, Fila fila) {
-        Fila fila1 = filaService.buscarFila(fila.getId());
+    public AtendimentoDTO salvarAtendimento(AtendimentoDTO atendimento, FilaDTO fila) {
+        FilaDTO fila1 = filaService.buscarFila(fila.getId());
         atendimento.setIdFila(fila.getId());
-        AtendimentoEntity atendimentoEntity = atendimentoRepository.save(converterParaAtendimentoEntity(atendimento, fila1));
+        Atendimento atendimentoEntity = atendimentoRepository.save(converterParaAtendimento(atendimento, fila1));
         logger.info("Atendimento salvo com sucesso: {}", atendimentoEntity);
-        return converterParaAtendimento(atendimentoEntity);
+        return converterParaAtendimentoDTO(atendimentoEntity);
     }
 
-    public List<Atendimento> buscarAtendimentos(){
-        List<AtendimentoEntity> atendimentos = atendimentoRepository.findAll();
-        List<Atendimento> list = atendimentos.stream().map(AtendimentoUtils::converterParaAtendimento).toList();
+    public List<AtendimentoDTO> buscarAtendimentos(){
+        List<Atendimento> atendimentos = atendimentoRepository.findAll();
+        List<AtendimentoDTO> list = atendimentos.stream().map(AtendimentoUtils::converterParaAtendimentoDTO).toList();
         return list;
     }
 }

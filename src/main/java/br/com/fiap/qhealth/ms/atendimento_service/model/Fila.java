@@ -1,4 +1,4 @@
-package br.com.fiap.qhealth.ms.atendimento_service.entity;
+package br.com.fiap.qhealth.ms.atendimento_service.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FilaEntity {
+public class Fila {
 
     @Id
     @Column(name = "id", nullable = false, unique = true)
@@ -37,4 +37,5 @@ public class FilaEntity {
     @UpdateTimestamp
     @Column(name = "data_ultima_alteracao")
     private LocalDateTime dataUltimaAlteracao;
+
 }

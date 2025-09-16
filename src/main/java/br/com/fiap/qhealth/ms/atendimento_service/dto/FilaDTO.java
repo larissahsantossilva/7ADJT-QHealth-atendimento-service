@@ -1,14 +1,8 @@
-package br.com.fiap.qhealth.ms.atendimento_service.domain;
+package br.com.fiap.qhealth.ms.atendimento_service.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -16,7 +10,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Builder
-public class Fila {
+public class FilaDTO {
     private UUID id;
     private UUID idUnidadeSaude;
     private String nomeFila;

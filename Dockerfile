@@ -23,7 +23,7 @@ FROM eclipse-temurin:21-alpine AS deploy
 WORKDIR /app
 
 # Copia o JAR gerado no estágio de build para o diretório de trabalho
-COPY --from=build /app/target/*.jar /app/app.jar
+COPY --from=build /app/target/*.jar /app/atendimento-service.jar
 
 # Configura o comando de entrada para executar o JAR da aplicação
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "atendimento-service.jar"]

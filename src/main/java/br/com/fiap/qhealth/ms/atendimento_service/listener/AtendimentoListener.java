@@ -1,7 +1,7 @@
 package br.com.fiap.qhealth.ms.atendimento_service.listener;
 
-import br.com.fiap.qhealth.ms.atendimento_service.domain.Atendimento;
-import br.com.fiap.qhealth.ms.atendimento_service.domain.Fila;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.AtendimentoDTO;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDTO;
 import br.com.fiap.qhealth.ms.atendimento_service.listener.json.AtendimentoRequestJson;
 import br.com.fiap.qhealth.ms.atendimento_service.service.AtendimentoService;
 import br.com.fiap.qhealth.ms.atendimento_service.service.FilaService;
@@ -31,10 +31,11 @@ public class AtendimentoListener {
     @RabbitListener(queues = QUEUE_NAME)
     public void escutarMensagem(AtendimentoRequestJson atendimentoRequestJson) {
         log.info(">>> Mensagem recebida da fila [{}]: '{}'", QUEUE_NAME, atendimentoRequestJson);
-        List<Fila> filas = filaService.buscarFilas();
-        Fila fila = filaService.buscarFila(UUID.fromString("c1b2a3d4-e5f6-a7b8-c9d0-a1b2c3d4e5f6"));//Falta lógica para escolher a fila correta
-        List<Atendimento> atendimentos = atendimentoService.buscarAtendimentos();
-        Atendimento atendimento = atendimentoService.salvarAtendimento(AtendimentoUtils.converterParaAtendimento(atendimentoRequestJson), fila);
+        List<FilaDTO> filas = filaService.buscarFilas();
+        FilaDTO fila = filaService.buscarFila(UUID.fromString("c1b2a3d4-e5f6-a7b8-c9d0-a1b2c3d4e5f6"));//Falta lógica para escolher a fila correta
+        List<AtendimentoDTO> atendimentos = atendimentoService.buscarAtendimentos();
+        AtendimentoDTO atendimento = atendimentoService.salvarAtendimento(AtendimentoUtils.converterParaAtendimentoDTO(atendimentoRequestJson), fila);
         log.info(">>> Atendimento salvo: {}", atendimento);
     }
+
 }

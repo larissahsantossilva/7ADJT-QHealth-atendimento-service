@@ -1,4 +1,4 @@
-package br.com.fiap.qhealth.ms.atendimento_service.domain;
+package br.com.fiap.qhealth.ms.atendimento_service.dto;
 
 import lombok.*;
 
@@ -9,7 +9,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Atendimento {
+public class AtendimentoDTO {
     private UUID id;
     private UUID idPaciente;
     private UUID idFila;

@@ -6,9 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class AtendimentoProducer {
 
@@ -27,4 +28,5 @@ public class AtendimentoProducer {
             log.error("!!! Erro ao enviar mensagem para a fila: {}", e.getMessage());
         }
     }
+
 }

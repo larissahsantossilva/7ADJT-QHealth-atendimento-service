@@ -31,11 +31,9 @@ public class RabbitMQConfig {
         return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY);
     }
 
-    // --- BEAN ADICIONADO ---
-    // Este bean diz ao Spring para usar o Jackson (a mesma biblioteca usada para APIs REST)
-    // para converter os objetos DTO para JSON antes de os enviar para a fila.
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
+
 }
