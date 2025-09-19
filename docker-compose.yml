@@ -138,6 +138,10 @@ services:
       POSTGRES_DB: atendimento_receiver_db
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      RABBITMQ_USER: ${RABBITMQ_USER}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASS}
+      RABBITMQ_PORT: 5672
+      RABBITMQ_HOST: rabbitmq
     ports:
       - "8083:8080"
     restart: always
