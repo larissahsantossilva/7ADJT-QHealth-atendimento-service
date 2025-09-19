@@ -10,8 +10,7 @@ public class AtendimentoUtils {
     public static AtendimentoDTO converterParaAtendimentoDTO(AtendimentoRequestJson atendimentoRequestJson) {
         return AtendimentoDTO.builder()
                 .id(atendimentoRequestJson.id())
-                .idAnamnese(atendimentoRequestJson.idAnamnese())
-                .idPaciente(atendimentoRequestJson.idPaciente())
+                .idPaciente(atendimentoRequestJson.pacienteId())
                 .posicaoFila(atendimentoRequestJson.posicaoFila())
                 .dataCriacao(atendimentoRequestJson.dataCriacao())
                 .dataUltimaAlteracao(atendimentoRequestJson.dataUltimaAlteracao())
