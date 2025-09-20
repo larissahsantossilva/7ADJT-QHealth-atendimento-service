@@ -11,6 +11,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,11 +24,13 @@ public class AtendimentoListener {
     private final AtendimentoService atendimentoService;
     private final FilaService filaService;
     private final AnamneseService anamneseService;
+    private final TriagemService triagemService;
 
-    public AtendimentoListener(AtendimentoService atendimentoService, FilaService filaService, AnamneseService anamneseService) {
+    public AtendimentoListener(AtendimentoService atendimentoService, FilaService filaService, AnamneseService anamneseService, TriagemService triagemService) {
         this.atendimentoService = atendimentoService;
         this.filaService = filaService;
         this.anamneseService = anamneseService;
+        this.triagemService = triagemService;
     }
 
     @RabbitListener(queues = QUEUE_NAME)
@@ -41,11 +44,23 @@ public class AtendimentoListener {
         anamneseRequest.setGravida(atendimentoRequestJson.gravida());
         ResponseEntity<UUID> uuidResponseEntity = anamneseService.criarAnamnese(anamneseRequest);
         ResponseEntity<List<AnamneseResponse>> listResponseEntity2 = anamneseService.listarAnamneses();
+
+        TriagemAnamneseRequest triagemAnamneseRequest = new TriagemAnamneseRequest();
+        triagemAnamneseRequest.setId(uuidResponseEntity.getBody());
+        triagemAnamneseRequest.setDiabetico(atendimentoRequestJson.diabetico());
+        triagemAnamneseRequest.setFumante(atendimentoRequestJson.fumante());
+        triagemAnamneseRequest.setGravida(atendimentoRequestJson.gravida());
+        triagemAnamneseRequest.setHipertenso(atendimentoRequestJson.hipertenso());
+
+        TriagemRequest triagemRequest = new TriagemRequest();
+        triagemRequest.setDataNascimento(LocalDate.now());
+        triagemRequest.setAnamnese(triagemAnamneseRequest);
+
+        ResponseEntity<TriagemResponse> triagemResponseResponseEntity = triagemService.definirTriagem(triagemRequest);
         List<FilaDTO> filas = filaService.buscarFilas();
         FilaDTO fila = filaService.buscarFila(UUID.fromString("c1b2a3d4-e5f6-a7b8-c9d0-a1b2c3d4e5f6"));//Falta lógica para escolher a fila correta
         List<AtendimentoDTO> atendimentos = atendimentoService.buscarAtendimentos();
         AtendimentoDTO atendimento = atendimentoService.salvarAtendimento(AtendimentoUtils.converterParaAtendimentoDTO(atendimentoRequestJson), fila);
         log.info(">>> Atendimento salvo: {}", atendimento);
     }
-
 }
