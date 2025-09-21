@@ -38,36 +38,55 @@ public class AtendimentoListener {
     @RabbitListener(queues = QUEUE_NAME)
     public void escutarMensagem(AtendimentoRequestJson atendimentoRequestJson) {
         log.info(">>> Mensagem recebida da fila [{}]: '{}'", QUEUE_NAME, atendimentoRequestJson);
-        ResponseEntity<List<AnamneseResponse>> listResponseEntity = anamneseService.listarAnamneses();
+
+        UUID anamneseId = criarAnamnese(atendimentoRequestJson);
+        PacienteResponse pacienteResponse = buscarPaciente(atendimentoRequestJson.pacienteId());
+        TriagemResponse triagemResponse = definirTriagem(anamneseId, atendimentoRequestJson, pacienteResponse);
+        FilaDTO fila = escolherFila();
+        AtendimentoDTO atendimento = salvarAtendimento(atendimentoRequestJson, fila, anamneseId);
+
+        log.info(">>> Atendimento salvo: {}", atendimento);
+    }
+
+    private UUID criarAnamnese(AtendimentoRequestJson requestJson) {
         AnamneseRequest anamneseRequest = new AnamneseRequest(
-            atendimentoRequestJson.diabetico(),
-            atendimentoRequestJson.hipertenso(),
-            atendimentoRequestJson.fumante(),
-            atendimentoRequestJson.gravida()
+            requestJson.diabetico(),
+            requestJson.hipertenso(),
+            requestJson.fumante(),
+            requestJson.gravida()
         );
-        ResponseEntity<UUID> uuidResponseEntity = anamneseService.criarAnamnese(anamneseRequest);
-        ResponseEntity<List<AnamneseResponse>> listResponseEntity2 = anamneseService.listarAnamneses();
+        ResponseEntity<UUID> response = anamneseService.criarAnamnese(anamneseRequest);
+        return response.getBody();
+    }
 
+    private TriagemResponse definirTriagem(UUID anamneseId, AtendimentoRequestJson requestJson, PacienteResponse pacienteResponse) {
         TriagemAnamneseRequest triagemAnamneseRequest = new TriagemAnamneseRequest(
-            uuidResponseEntity.getBody(),
-            atendimentoRequestJson.fumante(),
-            atendimentoRequestJson.gravida(),
-            atendimentoRequestJson.diabetico(),
-            atendimentoRequestJson.hipertenso()
+            anamneseId,
+            requestJson.fumante(),
+            requestJson.gravida(),
+            requestJson.diabetico(),
+            requestJson.hipertenso()
         );
-
         TriagemRequest triagemRequest = new TriagemRequest(
-            LocalDate.now(),
+            pacienteResponse.dataNascimento(),
             triagemAnamneseRequest
         );
+        ResponseEntity<TriagemResponse> response = triagemService.definirTriagem(triagemRequest);
+        return response.getBody();
+    }
 
-        ResponseEntity<TriagemResponse> triagemResponseResponseEntity = triagemService.definirTriagem(triagemRequest);
-        ResponseEntity<PacienteResponse> pacienteResponseResponseEntity = pacienteService.buscarPacientePorId(atendimentoRequestJson.pacienteId());
+    private PacienteResponse buscarPaciente(UUID pacienteId) {
+        ResponseEntity<PacienteResponse> response = pacienteService.buscarPacientePorId(pacienteId);
+        return response.getBody();
+    }
 
-        List<FilaDTO> filas = filaService.buscarFilas();
-        FilaDTO fila = filaService.buscarFila(UUID.fromString("c1b2a3d4-e5f6-a7b8-c9d0-a1b2c3d4e5f6"));//Falta lógica para escolher a fila correta
-        List<AtendimentoDTO> atendimentos = atendimentoService.buscarAtendimentos();
-        AtendimentoDTO atendimento = atendimentoService.salvarAtendimento(AtendimentoUtils.converterParaAtendimentoDTO(atendimentoRequestJson), fila);
-        log.info(">>> Atendimento salvo: {}", atendimento);
+    private FilaDTO escolherFila() {
+        // TODO: Implement logic to choose the correct queue
+        return filaService.buscarFila(UUID.fromString("c1b2a3d4-e5f6-a7b8-c9d0-a1b2c3d4e5f6"));
+    }
+
+    private AtendimentoDTO salvarAtendimento(AtendimentoRequestJson requestJson, FilaDTO fila, UUID anamneseId) {
+        AtendimentoDTO atendimentoDTO = AtendimentoUtils.converterParaAtendimentoDTO(requestJson, anamneseId, fila);
+        return atendimentoService.salvarAtendimento(atendimentoDTO, fila);
     }
 }

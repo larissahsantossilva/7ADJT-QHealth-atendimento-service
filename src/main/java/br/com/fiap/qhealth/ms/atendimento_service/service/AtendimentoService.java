@@ -24,9 +24,8 @@ public class AtendimentoService {
     public final FilaService filaService;
 
     public AtendimentoDTO salvarAtendimento(AtendimentoDTO atendimento, FilaDTO fila) {
-        FilaDTO fila1 = filaService.buscarFila(fila.getId());
         atendimento.setIdFila(fila.getId());
-        Atendimento atendimentoEntity = atendimentoRepository.save(converterParaAtendimento(atendimento, fila1));
+        Atendimento atendimentoEntity = atendimentoRepository.save(converterParaAtendimento(atendimento, fila));
         logger.info("Atendimento salvo com sucesso: {}", atendimentoEntity);
         return converterParaAtendimentoDTO(atendimentoEntity);
     }

@@ -5,12 +5,16 @@ import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDTO;
 import br.com.fiap.qhealth.ms.atendimento_service.model.Atendimento;
 import br.com.fiap.qhealth.ms.atendimento_service.listener.json.AtendimentoRequestJson;
 
+import java.util.UUID;
+
 public class AtendimentoUtils {
 
-    public static AtendimentoDTO converterParaAtendimentoDTO(AtendimentoRequestJson atendimentoRequestJson) {
+    public static AtendimentoDTO converterParaAtendimentoDTO(AtendimentoRequestJson atendimentoRequestJson, UUID anamneseId, FilaDTO fila) {
         return AtendimentoDTO.builder()
                 .id(atendimentoRequestJson.id())
                 .idPaciente(atendimentoRequestJson.pacienteId())
+                .idAnamnese(anamneseId)
+                .idFila(fila.getId())
                 .posicaoFila(atendimentoRequestJson.posicaoFila())
                 .dataCriacao(atendimentoRequestJson.dataCriacao())
                 .dataUltimaAlteracao(atendimentoRequestJson.dataUltimaAlteracao())
