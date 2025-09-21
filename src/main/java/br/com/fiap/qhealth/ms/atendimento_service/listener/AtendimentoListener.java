@@ -42,16 +42,18 @@ public class AtendimentoListener {
         ResponseEntity<UUID> uuidResponseEntity = anamneseService.criarAnamnese(anamneseRequest);
         ResponseEntity<List<AnamneseResponse>> listResponseEntity2 = anamneseService.listarAnamneses();
 
-        TriagemAnamneseRequest triagemAnamneseRequest = new TriagemAnamneseRequest();
-        triagemAnamneseRequest.setId(uuidResponseEntity.getBody());
-        triagemAnamneseRequest.setDiabetico(atendimentoRequestJson.diabetico());
-        triagemAnamneseRequest.setFumante(atendimentoRequestJson.fumante());
-        triagemAnamneseRequest.setGravida(atendimentoRequestJson.gravida());
-        triagemAnamneseRequest.setHipertenso(atendimentoRequestJson.hipertenso());
+        TriagemAnamneseRequest triagemAnamneseRequest = new TriagemAnamneseRequest(
+            uuidResponseEntity.getBody(),
+            atendimentoRequestJson.fumante(),
+            atendimentoRequestJson.gravida(),
+            atendimentoRequestJson.diabetico(),
+            atendimentoRequestJson.hipertenso()
+        );
 
-        TriagemRequest triagemRequest = new TriagemRequest();
-        triagemRequest.setDataNascimento(LocalDate.now());
-        triagemRequest.setAnamnese(triagemAnamneseRequest);
+        TriagemRequest triagemRequest = new TriagemRequest(
+            LocalDate.now(),
+            triagemAnamneseRequest
+        );
 
         ResponseEntity<TriagemResponse> triagemResponseResponseEntity = triagemService.definirTriagem(triagemRequest);
         ResponseEntity<PacienteResponse> pacienteResponseResponseEntity = pacientesService.buscarPacientePorId(atendimentoRequestJson.pacienteId());
