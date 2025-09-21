@@ -1,4 +1,4 @@
-package br.com.fiap.qhealth.ms.atendimento_service.service;
+package br.com.fiap.qhealth.ms.atendimento_service.external.triagem.request;
 
 import java.time.LocalDate;
 

@@ -1,5 +1,8 @@
 package br.com.fiap.qhealth.ms.atendimento_service.service;
 
+import br.com.fiap.qhealth.ms.atendimento_service.external.anamnese.AnamneseClient;
+import br.com.fiap.qhealth.ms.atendimento_service.external.anamnese.request.AnamneseRequest;
+import br.com.fiap.qhealth.ms.atendimento_service.external.anamnese.response.AnamneseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

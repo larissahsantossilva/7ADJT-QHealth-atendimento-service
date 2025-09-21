@@ -1,14 +1,14 @@
-package br.com.fiap.qhealth.ms.atendimento_service.service;
+package br.com.fiap.qhealth.ms.atendimento_service.external.paciente;
 
+import br.com.fiap.qhealth.ms.atendimento_service.external.paciente.response.PacienteResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @FeignClient(name = "usuarios-service", url = "http://atendimento-usuario:8080", path = "/api/v1/pacientes")
-public interface PacientesClient {
+public interface PacienteClient {
 
 //    @GetMapping
 //    ResponseEntity<List<AnamneseResponse>> listarAnamneses(

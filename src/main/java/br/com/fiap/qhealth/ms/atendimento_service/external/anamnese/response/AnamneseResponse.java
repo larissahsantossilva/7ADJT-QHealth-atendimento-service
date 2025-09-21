@@ -1,4 +1,4 @@
-package br.com.fiap.qhealth.ms.atendimento_service.service;
+package br.com.fiap.qhealth.ms.atendimento_service.external.anamnese.response;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

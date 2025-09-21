@@ -1,11 +1,11 @@
 package br.com.fiap.qhealth.ms.atendimento_service.service;
 
+import br.com.fiap.qhealth.ms.atendimento_service.external.triagem.TriagemClient;
+import br.com.fiap.qhealth.ms.atendimento_service.external.triagem.request.TriagemRequest;
+import br.com.fiap.qhealth.ms.atendimento_service.external.triagem.response.TriagemResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor

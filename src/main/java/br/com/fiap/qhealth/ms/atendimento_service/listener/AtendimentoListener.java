@@ -2,6 +2,12 @@ package br.com.fiap.qhealth.ms.atendimento_service.listener;
 
 import br.com.fiap.qhealth.ms.atendimento_service.dto.AtendimentoDTO;
 import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDTO;
+import br.com.fiap.qhealth.ms.atendimento_service.external.anamnese.request.AnamneseRequest;
+import br.com.fiap.qhealth.ms.atendimento_service.external.anamnese.response.AnamneseResponse;
+import br.com.fiap.qhealth.ms.atendimento_service.external.paciente.response.PacienteResponse;
+import br.com.fiap.qhealth.ms.atendimento_service.external.triagem.request.TriagemAnamneseRequest;
+import br.com.fiap.qhealth.ms.atendimento_service.external.triagem.request.TriagemRequest;
+import br.com.fiap.qhealth.ms.atendimento_service.external.triagem.response.TriagemResponse;
 import br.com.fiap.qhealth.ms.atendimento_service.listener.json.AtendimentoRequestJson;
 import br.com.fiap.qhealth.ms.atendimento_service.service.*;
 import br.com.fiap.qhealth.ms.atendimento_service.utils.AtendimentoUtils;
@@ -27,7 +33,7 @@ public class AtendimentoListener {
     private final FilaService filaService;
     private final AnamneseService anamneseService;
     private final TriagemService triagemService;
-    private final PacientesService pacientesService;
+    private final PacienteService pacienteService;
 
     @RabbitListener(queues = QUEUE_NAME)
     public void escutarMensagem(AtendimentoRequestJson atendimentoRequestJson) {
@@ -56,7 +62,7 @@ public class AtendimentoListener {
         );
 
         ResponseEntity<TriagemResponse> triagemResponseResponseEntity = triagemService.definirTriagem(triagemRequest);
-        ResponseEntity<PacienteResponse> pacienteResponseResponseEntity = pacientesService.buscarPacientePorId(atendimentoRequestJson.pacienteId());
+        ResponseEntity<PacienteResponse> pacienteResponseResponseEntity = pacienteService.buscarPacientePorId(atendimentoRequestJson.pacienteId());
 
         List<FilaDTO> filas = filaService.buscarFilas();
         FilaDTO fila = filaService.buscarFila(UUID.fromString("c1b2a3d4-e5f6-a7b8-c9d0-a1b2c3d4e5f6"));//Falta lógica para escolher a fila correta

@@ -1,5 +1,7 @@
-package br.com.fiap.qhealth.ms.atendimento_service.service;
+package br.com.fiap.qhealth.ms.atendimento_service.external.anamnese;
 
+import br.com.fiap.qhealth.ms.atendimento_service.external.anamnese.request.AnamneseRequest;
+import br.com.fiap.qhealth.ms.atendimento_service.external.anamnese.response.AnamneseResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
