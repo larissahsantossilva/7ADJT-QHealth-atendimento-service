@@ -7,15 +7,12 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Getter
-@Setter
-@NoArgsConstructor
-public class AnamneseResponse {
-    private UUID id;
-    private boolean fumante;
-    private boolean gravida;
-    private boolean diabetico;
-    private boolean hipertenso;
-    private LocalDateTime dataCriacao;
-    private LocalDateTime dataUltimaAlteracao;
-}
+public record AnamneseResponse(
+    UUID id,
+    Boolean fumante,
+    Boolean gravida,
+    Boolean diabetico,
+    Boolean hipertenso,
+    LocalDateTime dataCriacao,
+    LocalDateTime dataUltimaAlteracao)
+{}

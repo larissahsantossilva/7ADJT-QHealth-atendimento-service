@@ -33,11 +33,12 @@ public class AtendimentoListener {
     public void escutarMensagem(AtendimentoRequestJson atendimentoRequestJson) {
         log.info(">>> Mensagem recebida da fila [{}]: '{}'", QUEUE_NAME, atendimentoRequestJson);
         ResponseEntity<List<AnamneseResponse>> listResponseEntity = anamneseService.listarAnamneses();
-        AnamneseRequest anamneseRequest = new AnamneseRequest();
-        anamneseRequest.setDiabetico(atendimentoRequestJson.diabetico());
-        anamneseRequest.setHipertenso(atendimentoRequestJson.hipertenso());
-        anamneseRequest.setFumante(atendimentoRequestJson.fumante());
-        anamneseRequest.setGravida(atendimentoRequestJson.gravida());
+        AnamneseRequest anamneseRequest = new AnamneseRequest(
+            atendimentoRequestJson.diabetico(),
+            atendimentoRequestJson.hipertenso(),
+            atendimentoRequestJson.fumante(),
+            atendimentoRequestJson.gravida()
+        );
         ResponseEntity<UUID> uuidResponseEntity = anamneseService.criarAnamnese(anamneseRequest);
         ResponseEntity<List<AnamneseResponse>> listResponseEntity2 = anamneseService.listarAnamneses();
 
