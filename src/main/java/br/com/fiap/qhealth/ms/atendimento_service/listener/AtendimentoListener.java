@@ -5,6 +5,7 @@ import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDTO;
 import br.com.fiap.qhealth.ms.atendimento_service.listener.json.AtendimentoRequestJson;
 import br.com.fiap.qhealth.ms.atendimento_service.service.*;
 import br.com.fiap.qhealth.ms.atendimento_service.utils.AtendimentoUtils;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -17,6 +18,7 @@ import java.util.UUID;
 
 import static br.com.fiap.qhealth.ms.atendimento_service.config.RabbitMQConfig.QUEUE_NAME;
 
+@RequiredArgsConstructor
 @Service
 public class AtendimentoListener {
 
@@ -26,14 +28,6 @@ public class AtendimentoListener {
     private final AnamneseService anamneseService;
     private final TriagemService triagemService;
     private final PacientesService pacientesService;
-
-    public AtendimentoListener(AtendimentoService atendimentoService, FilaService filaService, AnamneseService anamneseService, TriagemService triagemService, PacientesService pacientesService) {
-        this.atendimentoService = atendimentoService;
-        this.filaService = filaService;
-        this.anamneseService = anamneseService;
-        this.triagemService = triagemService;
-        this.pacientesService = pacientesService;
-    }
 
     @RabbitListener(queues = QUEUE_NAME)
     public void escutarMensagem(AtendimentoRequestJson atendimentoRequestJson) {
