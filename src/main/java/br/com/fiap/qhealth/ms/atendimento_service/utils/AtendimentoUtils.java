@@ -10,7 +10,7 @@ import java.util.UUID;
 public class AtendimentoUtils {
 
     public static AtendimentoDTO converterParaAtendimentoDTO(AtendimentoRequestJson atendimentoRequestJson, UUID anamneseId, FilaDTO fila) {
-        return AtendimentoDTO.builder()
+        AtendimentoDTO atendimentoDto = AtendimentoDTO.builder()
                 .id(atendimentoRequestJson.id())
                 .idPaciente(atendimentoRequestJson.pacienteId())
                 .idAnamnese(anamneseId)
@@ -19,6 +19,7 @@ public class AtendimentoUtils {
                 .dataCriacao(atendimentoRequestJson.dataCriacao())
                 .dataUltimaAlteracao(atendimentoRequestJson.dataUltimaAlteracao())
             .build();
+        return atendimentoDto;
     }
 
     public static Atendimento converterParaAtendimento(AtendimentoDTO atendimentoDTO, FilaDTO filaDTO) {
@@ -35,7 +36,7 @@ public class AtendimentoUtils {
     }
 
     public static AtendimentoDTO converterParaAtendimentoDTO(Atendimento atendimento) {
-        return AtendimentoDTO.builder()
+        AtendimentoDTO atendimentoDto = AtendimentoDTO.builder()
                 .id(atendimento.getId())
                 .idAnamnese(atendimento.getIdAnamnese())
                 .idPaciente(atendimento.getIdPaciente())
@@ -43,5 +44,6 @@ public class AtendimentoUtils {
                 .dataCriacao(atendimento.getDataCriacao())
                 .dataUltimaAlteracao(atendimento.getDataUltimaAlteracao())
             .build();
+        return atendimentoDto;
     }
 }

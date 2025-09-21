@@ -24,9 +24,9 @@ public class FilaService {
     public final FilaRepository filaRepository;
 
     public FilaDTO salvarFila(FilaDTO fila) {
-        Fila filaEntitySalva = filaRepository.save(converterParaFila(fila));
-        logger.info("Fila salva com sucesso: {}", filaEntitySalva);
-        return converterParaFilaDTO(filaEntitySalva);
+        Fila filaEntity = filaRepository.save(converterParaFila(fila));
+        logger.info("Fila salva com sucesso: {}", filaEntity);
+        return converterParaFilaDTO(filaEntity);
     }
 
     public FilaDTO buscarFila(UUID idFila){

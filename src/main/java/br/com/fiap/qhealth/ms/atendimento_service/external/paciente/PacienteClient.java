@@ -10,24 +10,6 @@ import java.util.UUID;
 @FeignClient(name = "usuarios-service", url = "http://atendimento-usuario:8080", path = "/api/v1/pacientes")
 public interface PacienteClient {
 
-//    @GetMapping
-//    ResponseEntity<List<AnamneseResponse>> listarAnamneses(
-//        @RequestParam("page") int page,
-//        @RequestParam("size") int size
-//    );
-
     @GetMapping("/{id}")
     ResponseEntity<PacienteResponse> buscarPacientePorId(@PathVariable("id") UUID id);
-
-//    @PostMapping
-//    ResponseEntity<UUID> criarAnamnese(@RequestBody AnamneseRequest anamneseRequest);
-
-//    @PutMapping("/{id}")
-//    ResponseEntity<String> atualizarAnamnese(
-//            @PathVariable("id") UUID id,
-//            @RequestBody AnamneseRequest anamneseRequest
-//    );
-//
-//    @DeleteMapping("/{id}")
-//    ResponseEntity<Void> excluirAnamnesePorId(@PathVariable("id") UUID id);
 }

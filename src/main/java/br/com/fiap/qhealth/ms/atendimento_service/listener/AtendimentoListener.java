@@ -3,7 +3,6 @@ package br.com.fiap.qhealth.ms.atendimento_service.listener;
 import br.com.fiap.qhealth.ms.atendimento_service.dto.AtendimentoDTO;
 import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDTO;
 import br.com.fiap.qhealth.ms.atendimento_service.external.anamnese.request.AnamneseRequest;
-import br.com.fiap.qhealth.ms.atendimento_service.external.anamnese.response.AnamneseResponse;
 import br.com.fiap.qhealth.ms.atendimento_service.external.paciente.response.PacienteResponse;
 import br.com.fiap.qhealth.ms.atendimento_service.external.triagem.request.TriagemAnamneseRequest;
 import br.com.fiap.qhealth.ms.atendimento_service.external.triagem.request.TriagemRequest;
@@ -18,8 +17,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 import static br.com.fiap.qhealth.ms.atendimento_service.config.RabbitMQConfig.QUEUE_NAME;

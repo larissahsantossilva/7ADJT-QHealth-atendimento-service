@@ -13,7 +13,7 @@ public class TriagemService {
     private final TriagemClient triagemClient;
 
     public ResponseEntity<TriagemResponse> definirTriagem(TriagemRequest triagemRequest) {
-        ResponseEntity<TriagemResponse> responseEntity = triagemClient.definirTriagem(triagemRequest);
-        return responseEntity;
+        ResponseEntity<TriagemResponse> triagemResponse = triagemClient.definirTriagem(triagemRequest);
+        return triagemResponse;
     }
 }

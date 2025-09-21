@@ -6,7 +6,7 @@ import br.com.fiap.qhealth.ms.atendimento_service.model.Fila;
 public class FilaUtils {
 
     public static Fila converterParaFila(FilaDTO filaDTO) {
-        return Fila.builder()
+        Fila fila = Fila.builder()
                 .id(filaDTO.getId())
                 .idUnidadeSaude(filaDTO.getIdUnidadeSaude())
                 .nomeFila(filaDTO.getNomeFila())
@@ -14,10 +14,11 @@ public class FilaUtils {
                 .dataCriacao(filaDTO.getDataCriacao())
                 .dataUltimaAlteracao(filaDTO.getDataUltimaAlteracao())
             .build();
+        return fila;
     }
 
     public static FilaDTO converterParaFilaDTO(Fila fila) {
-        return FilaDTO.builder()
+        FilaDTO filaDto = FilaDTO.builder()
                 .id(fila.getId())
                 .idUnidadeSaude(fila.getIdUnidadeSaude())
                 .nomeFila(fila.getNomeFila())
@@ -25,5 +26,6 @@ public class FilaUtils {
                 .dataCriacao(fila.getDataCriacao())
                 .dataUltimaAlteracao(fila.getDataUltimaAlteracao())
             .build();
+        return filaDto;
     }
 }
