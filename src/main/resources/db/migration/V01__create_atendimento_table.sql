@@ -22,7 +22,6 @@ CREATE TABLE atendimento (
     id UUID PRIMARY KEY,
     paciente_id UUID NOT NULL,
     fila_id UUID NOT NULL,
-    posicao_fila INTEGER NOT NULL,
     anamnese_id UUID NOT NULL,
     data_criacao TIMESTAMP NOT NULL DEFAULT NOW(),
     data_ultima_alteracao TIMESTAMP,

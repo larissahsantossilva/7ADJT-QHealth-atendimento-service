@@ -15,7 +15,6 @@ public class AtendimentoUtils {
                 .idPaciente(atendimentoRequestJson.pacienteId())
                 .idAnamnese(anamneseId)
                 .idFila(fila.getId())
-                .posicaoFila(atendimentoRequestJson.posicaoFila())
                 .dataCriacao(atendimentoRequestJson.dataCriacao())
                 .dataUltimaAlteracao(atendimentoRequestJson.dataUltimaAlteracao())
             .build();
@@ -28,7 +27,6 @@ public class AtendimentoUtils {
                 .idAnamnese(atendimentoDTO.getIdAnamnese())
                 .idPaciente(atendimentoDTO.getIdPaciente())
                 .fila(FilaUtils.converterParaFila(filaDTO))
-                .posicaoFila(atendimentoDTO.getPosicaoFila())
                 .dataCriacao(atendimentoDTO.getDataCriacao())
                 .dataUltimaAlteracao(atendimentoDTO.getDataUltimaAlteracao())
             .build();
@@ -40,7 +38,6 @@ public class AtendimentoUtils {
                 .id(atendimento.getId())
                 .idAnamnese(atendimento.getIdAnamnese())
                 .idPaciente(atendimento.getIdPaciente())
-                .posicaoFila(atendimento.getPosicaoFila())
                 .dataCriacao(atendimento.getDataCriacao())
                 .dataUltimaAlteracao(atendimento.getDataUltimaAlteracao())
             .build();

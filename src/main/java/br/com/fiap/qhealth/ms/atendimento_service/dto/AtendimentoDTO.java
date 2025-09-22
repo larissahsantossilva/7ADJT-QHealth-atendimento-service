@@ -13,7 +13,6 @@ public class AtendimentoDTO {
     private UUID id;
     private UUID idPaciente;
     private UUID idFila;
-    private Integer posicaoFila;
     private UUID idAnamnese;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataUltimaAlteracao;

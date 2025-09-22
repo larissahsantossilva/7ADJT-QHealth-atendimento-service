@@ -24,9 +24,6 @@ public class Atendimento {
     @Column(name = "paciente_id", nullable = false)
     private UUID idPaciente;
 
-    @Column(name = "posicao_fila", nullable = false)
-    private Integer posicaoFila;
-
     @Column(name = "anamnese_id", nullable = false)
     private UUID idAnamnese;
 

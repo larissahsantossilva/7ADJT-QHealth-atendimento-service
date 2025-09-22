@@ -84,6 +84,6 @@ public class AtendimentoListener {
 
     private AtendimentoDTO salvarAtendimento(AtendimentoRequestJson requestJson, FilaDTO fila, UUID anamneseId) {
         AtendimentoDTO atendimentoDTO = AtendimentoUtils.converterParaAtendimentoDTO(requestJson, anamneseId, fila);
-        return atendimentoService.salvarAtendimento(atendimentoDTO, fila);
+            return atendimentoService.salvarAtendimento(atendimentoDTO, fila);
     }
 }
