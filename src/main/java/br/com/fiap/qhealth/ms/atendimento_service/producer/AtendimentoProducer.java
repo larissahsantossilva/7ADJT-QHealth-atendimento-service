@@ -2,6 +2,7 @@ package br.com.fiap.qhealth.ms.atendimento_service.producer;
 
 import br.com.fiap.qhealth.ms.atendimento_service.config.RabbitMQConfig;
 import br.com.fiap.qhealth.ms.atendimento_service.listener.json.AtendimentoRequestJson;
+import br.com.fiap.qhealth.ms.atendimento_service.producer.json.AtendimentoUbsRequestJson;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,12 +16,12 @@ public class AtendimentoProducer {
     private static final Logger log = LoggerFactory.getLogger(AtendimentoProducer.class);
     private final RabbitTemplate rabbitTemplate;
 
-    public void enviarAtendimentoParaFila(AtendimentoRequestJson payload) {
+    public void enviarAtendimentoParaFila(AtendimentoUbsRequestJson payload, String nomeFila, String routingKey, String exchange) {
         try {
-            log.info(">>> Enviando para a fila [{}]: {}", RabbitMQConfig.QUEUE_NOVO_ATENDIMENTO, payload);
+            log.info(">>> Enviando para a fila [{}]: {}", nomeFila, payload);
             rabbitTemplate.convertAndSend(
-                RabbitMQConfig.EXCHANGE_NAME,
-                RabbitMQConfig.ROUTING_KEY_NOVO_ATENDIMENTO,
+                exchange,
+                routingKey,
                 payload
             );
         } catch (Exception e) {

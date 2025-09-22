@@ -8,6 +8,8 @@ import br.com.fiap.qhealth.ms.atendimento_service.external.triagem.request.Triag
 import br.com.fiap.qhealth.ms.atendimento_service.external.triagem.request.TriagemRequest;
 import br.com.fiap.qhealth.ms.atendimento_service.external.triagem.response.TriagemResponse;
 import br.com.fiap.qhealth.ms.atendimento_service.listener.json.AtendimentoRequestJson;
+import br.com.fiap.qhealth.ms.atendimento_service.producer.AtendimentoProducer;
+import br.com.fiap.qhealth.ms.atendimento_service.producer.json.AtendimentoUbsRequestJson;
 import br.com.fiap.qhealth.ms.atendimento_service.service.*;
 import br.com.fiap.qhealth.ms.atendimento_service.utils.AtendimentoUtils;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +33,7 @@ public class AtendimentoListener {
     private final AnamneseService anamneseService;
     private final TriagemService triagemService;
     private final PacienteService pacienteService;
+    private final AtendimentoProducer atendimentoProducer;
 
     @RabbitListener(queues = QUEUE_NOVO_ATENDIMENTO)
     public void escutarMensagem(AtendimentoRequestJson atendimentoRequestJson) {
@@ -41,6 +44,14 @@ public class AtendimentoListener {
         TriagemResponse triagemResponse = definirTriagem(anamneseId, atendimentoRequestJson, pacienteResponse);
         FilaDTO fila = escolherFila(triagemResponse);
         AtendimentoDTO atendimento = salvarAtendimento(atendimentoRequestJson, fila, anamneseId);
+        AtendimentoUbsRequestJson atendimentoUbsRequestJson = new AtendimentoUbsRequestJson(
+            atendimento.getId(),
+            atendimento.getIdPaciente(),
+            fila.getId(),
+            atendimento.getDataCriacao(),
+            atendimento.getDataUltimaAlteracao()
+        );
+        atendimentoProducer.enviarAtendimentoParaFila(atendimentoUbsRequestJson, "atendimento.ubs-1-preferencial", "atendimento.ubs-1-preferencial", "atendimento.exchange");
 
         log.info(">>> Atendimento salvo: {}", atendimento);
     }

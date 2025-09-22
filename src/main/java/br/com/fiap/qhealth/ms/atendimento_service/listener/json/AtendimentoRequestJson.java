@@ -6,12 +6,11 @@ import java.util.UUID;
 public record AtendimentoRequestJson(
     UUID id,
     UUID pacienteId,
-    Integer posicaoFila,
     Boolean fumante,
     Boolean gravida,
     Boolean diabetico,
     Boolean hipertenso,
     LocalDateTime dataCriacao,
-    LocalDateTime dataUltimaAlteracao)
-{}
+    LocalDateTime dataUltimaAlteracao
+) {}
 
