@@ -7,6 +7,7 @@ import br.com.fiap.qhealth.ms.atendimento_service.utils.FilaUtils;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,5 +39,10 @@ public class FilaService {
         List<Fila> filas = filaRepository.findAll();
         List<FilaDTO> list = filas.stream().map(FilaUtils::converterParaFilaDTO).toList();
         return list;
+    }
+
+    public FilaDTO buscarFilaPorNomeFila(String nomeFila){
+        Fila fila = filaRepository.findByNomeFila(nomeFila);
+        return converterParaFilaDTO(fila);
     }
 }

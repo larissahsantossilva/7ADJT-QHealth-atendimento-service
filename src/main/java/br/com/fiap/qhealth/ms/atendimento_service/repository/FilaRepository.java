@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface FilaRepository extends JpaRepository<Fila, UUID> {
+    Fila findByNomeFila(String nomeFila);
 }

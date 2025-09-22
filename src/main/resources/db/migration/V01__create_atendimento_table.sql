@@ -10,7 +10,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- Criação da tabela de fila
 CREATE TABLE fila (
     id UUID PRIMARY KEY,
-    unidade_saude_id UUID NULL,
+    unidade_saude_id UUID NOT NULL,
     nome_fila VARCHAR(255) NOT NULL,
     tipo_fila VARCHAR(255) NOT NULL,
     data_criacao TIMESTAMP NOT NULL DEFAULT NOW(),

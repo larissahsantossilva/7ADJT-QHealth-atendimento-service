@@ -18,23 +18,23 @@ public class RabbitMQConfig {
 
     // --- NOVAS CONSTANTES ADICIONADAS ---
     // Constantes para a fila de ATENDIMENTO REALIZADO
-    public static final String QUEUE_ATENDIMENTO_UBS_1_USUAL = "atendimento.ubs-1-c1b2a3d4-e5f6-a7b8-c9d0-a1b2c3d4e5f6";
-    public static final String ROUTING_KEY_ATENDIMENTO_UBS_1_USUAL = "atendimento.ubs-1-c1b2a3d4-e5f6-a7b8-c9d0-a1b2c3d4e5f6";
+    public static final String QUEUE_ATENDIMENTO_UBS_1_USUAL = "atendimento.ubs-1";
+    public static final String ROUTING_KEY_ATENDIMENTO_UBS_1_USUAL = "atendimento.ubs-1";
 
     // --- NOVAS CONSTANTES ADICIONADAS ---
     // Constantes para a fila de ATENDIMENTO REALIZADO
-    public static final String QUEUE_ATENDIMENTO_UBS_1_PREFERENCIAL = "atendimento.ubs-1-preferencial-d2c3b4e5-f6a7-b8c9-d0e1-b2c3d4e5f6a7";
-    public static final String ROUTING_KEY_ATENDIMENTO_UBS_1_PREFERENCIAL = "atendimento.ubs-d2c3b4e5-f6a7-b8c9-d0e1-b2c3d4e5f6a7";
+    public static final String QUEUE_ATENDIMENTO_UBS_1_PREFERENCIAL = "atendimento.ubs-1-preferencial";
+    public static final String ROUTING_KEY_ATENDIMENTO_UBS_1_PREFERENCIAL = "atendimento.ubs-1-preferencial";
 
     // --- NOVAS CONSTANTES ADICIONADAS ---
     // Constantes para a fila de ATENDIMENTO REALIZADO
-    public static final String QUEUE_ATENDIMENTO_UBS_2_USUAL = "atendimento.ubs-2-e3d4c5f6-a7b8-c9d0-e1f2-c3d4e5f6a7b8";
-    public static final String ROUTING_KEY_ATENDIMENTO_UBS_2_USUAL = "atendimento.ubs-2-e3d4c5f6-a7b8-c9d0-e1f2-c3d4e5f6a7b8";
+    public static final String QUEUE_ATENDIMENTO_UBS_2_USUAL = "atendimento.ubs-2";
+    public static final String ROUTING_KEY_ATENDIMENTO_UBS_2_USUAL = "atendimento.ubs-2";
 
     // --- NOVAS CONSTANTES ADICIONADAS ---
     // Constantes para a fila de ATENDIMENTO REALIZADO
-    public static final String QUEUE_ATENDIMENTO_UBS_2_PREFERENCIAL = "atendimento.ubs-2-preferencial-f4e5d6a7-b8c9-d0e1-f2a3-d4e5f6a7b8c9";
-    public static final String ROUTING_KEY_ATENDIMENTO_UBS_2_PREFERENCIAL = "atendimento.ubs-2-preferencial-f4e5d6a7-b8c9-d0e1-f2a3-d4e5f6a7b8c9";
+    public static final String QUEUE_ATENDIMENTO_UBS_2_PREFERENCIAL = "atendimento.ubs-2-preferencial";
+    public static final String ROUTING_KEY_ATENDIMENTO_UBS_2_PREFERENCIAL = "atendimento.ubs-2-preferencial";
 
     // A Exchange pode ser a mesma para ambos, para centralizar o roteamento
     public static final String EXCHANGE_NAME = "atendimento.exchange";

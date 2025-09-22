@@ -39,7 +39,7 @@ public class AtendimentoListener {
         UUID anamneseId = criarAnamnese(atendimentoRequestJson);
         PacienteResponse pacienteResponse = buscarPaciente(atendimentoRequestJson.pacienteId());
         TriagemResponse triagemResponse = definirTriagem(anamneseId, atendimentoRequestJson, pacienteResponse);
-        FilaDTO fila = escolherFila();
+        FilaDTO fila = escolherFila(triagemResponse);
         AtendimentoDTO atendimento = salvarAtendimento(atendimentoRequestJson, fila, anamneseId);
 
         log.info(">>> Atendimento salvo: {}", atendimento);
@@ -77,13 +77,23 @@ public class AtendimentoListener {
         return response.getBody();
     }
 
-    private FilaDTO escolherFila() {
-        // TODO: Implement logic to choose the correct queue
-        return filaService.buscarFila(UUID.fromString("c1b2a3d4-e5f6-a7b8-c9d0-a1b2c3d4e5f6"));
+    private FilaDTO escolherFila(TriagemResponse triagemResponse) {
+        int resultado = randomOneOrTwo();
+        FilaDTO filaDTO = null;
+        if(triagemResponse.preferencial()){
+            filaDTO = filaService.buscarFilaPorNomeFila("atendimento.ubs-" + resultado + "-preferencial");
+        } else {
+            filaDTO = filaService.buscarFilaPorNomeFila("atendimento.ubs-" + resultado);
+        }
+        return filaDTO;
     }
 
     private AtendimentoDTO salvarAtendimento(AtendimentoRequestJson requestJson, FilaDTO fila, UUID anamneseId) {
         AtendimentoDTO atendimentoDTO = AtendimentoUtils.converterParaAtendimentoDTO(requestJson, anamneseId, fila);
-            return atendimentoService.salvarAtendimento(atendimentoDTO, fila);
+        return atendimentoService.salvarAtendimento(atendimentoDTO, fila);
+    }
+
+    public static int randomOneOrTwo() {
+        return 1 + java.util.concurrent.ThreadLocalRandom.current().nextInt(2);
     }
 }

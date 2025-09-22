@@ -11,7 +11,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Component
@@ -33,19 +35,37 @@ public class StartupServiceCaller implements CommandLineRunner {
 
         // 2. Chamamos o método do nosso serviço
         try {
-            //filaService.verificarECriarFilasPadrao();
-            List<FilaDTO> filaDtos = filaService.buscarFilas();
-            filaDtos.forEach(fila -> log.info("Fila existente: {}", fila));
-
             ResponseEntity<List<UnidadeSaudeResponse>> listResponseEntity = ubsService.listarUbs();
             List<UnidadeSaudeResponse> ubs = listResponseEntity.getBody();
-            ubs.forEach(ubsItem -> log.info("UBS existente: {}", ubs));
-
+            log.info("Tamanho de lista UBS: {} ", ubs.size());
+            log.info("UBS existente: {}", ubs);
+            for(int i = 0; i < ubs.size(); i++){
+                log.info("UBS existente: {}", ubs.get(i));
+                filaService.salvarFila(
+                    new FilaDTO(
+                        null,
+                        ubs.get(i).id(),
+                        "atendimento.ubs-" + (i+1),
+                        "NORMAL",
+                        null,
+                        null
+                    )
+                );
+                filaService.salvarFila(
+                    new FilaDTO(
+                        null,
+                        ubs.get(i).id(),
+                        "atendimento.ubs-" + (i+1) + "-preferencial",
+                        "PREFERENCIAL",
+                        null,
+                        null
+                    )
+                );
+            }
             log.info(">>> Lógica de inicialização do FilaService executada com sucesso.");
         } catch (Exception e) {
             log.error("!!! Falha ao executar a lógica de inicialização do FilaService.", e);
         }
-
         log.info("=== TAREFAS DE INICIALIZAÇÃO CONCLUÍDAS ===");
         log.info("==========================================================");
     }

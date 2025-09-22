@@ -8,6 +8,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import static jakarta.persistence.GenerationType.AUTO;
+
 @Entity
 @Table(name = "fila", schema = "atendimento")
 @Getter
@@ -18,7 +20,8 @@ import java.util.UUID;
 public class Fila {
 
     @Id
-    @Column(name = "id", nullable = false, unique = true)
+    @GeneratedValue(strategy = AUTO)
+    @Column(name = "id", nullable = true, unique = true)
     private UUID id;
 
     @Column(name = "unidade_saude_id", nullable = false)
