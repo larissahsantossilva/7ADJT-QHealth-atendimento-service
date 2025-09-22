@@ -1,5 +1,6 @@
 package br.com.fiap.qhealth.ms.atendimento_service.listener;
 
+import br.com.fiap.qhealth.ms.atendimento_service.config.RabbitMQConfig;
 import br.com.fiap.qhealth.ms.atendimento_service.dto.AtendimentoDTO;
 import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDTO;
 import br.com.fiap.qhealth.ms.atendimento_service.external.anamnese.request.AnamneseRequest;
@@ -51,7 +52,7 @@ public class AtendimentoListener {
             atendimento.getDataCriacao(),
             atendimento.getDataUltimaAlteracao()
         );
-        atendimentoProducer.enviarAtendimentoParaFila(atendimentoUbsRequestJson, "atendimento.ubs-1-preferencial", "atendimento.ubs-1-preferencial", "atendimento.exchange");
+        atendimentoProducer.enviarAtendimentoParaFila(atendimentoUbsRequestJson, fila.getNomeFila(), fila.getNomeFila(), RabbitMQConfig.EXCHANGE_NAME);
 
         log.info(">>> Atendimento salvo: {}", atendimento);
     }
