@@ -17,10 +17,10 @@ public class AtendimentoProducer {
 
     public void enviarAtendimentoParaFila(AtendimentoRequestJson payload) {
         try {
-            log.info(">>> Enviando para a fila [{}]: {}", RabbitMQConfig.QUEUE_NAME, payload);
+            log.info(">>> Enviando para a fila [{}]: {}", RabbitMQConfig.QUEUE_NOVO_ATENDIMENTO, payload);
             rabbitTemplate.convertAndSend(
                 RabbitMQConfig.EXCHANGE_NAME,
-                RabbitMQConfig.ROUTING_KEY,
+                RabbitMQConfig.ROUTING_KEY_NOVO_ATENDIMENTO,
                 payload
             );
         } catch (Exception e) {

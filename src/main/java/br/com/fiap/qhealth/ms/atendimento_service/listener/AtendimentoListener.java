@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-import static br.com.fiap.qhealth.ms.atendimento_service.config.RabbitMQConfig.QUEUE_NAME;
+import static br.com.fiap.qhealth.ms.atendimento_service.config.RabbitMQConfig.QUEUE_NOVO_ATENDIMENTO;
 
 @RequiredArgsConstructor
 @Service
@@ -32,9 +32,9 @@ public class AtendimentoListener {
     private final TriagemService triagemService;
     private final PacienteService pacienteService;
 
-    @RabbitListener(queues = QUEUE_NAME)
+    @RabbitListener(queues = QUEUE_NOVO_ATENDIMENTO)
     public void escutarMensagem(AtendimentoRequestJson atendimentoRequestJson) {
-        log.info(">>> Mensagem recebida da fila [{}]: '{}'", QUEUE_NAME, atendimentoRequestJson);
+        log.info(">>> Mensagem recebida da fila [{}]: '{}'", QUEUE_NOVO_ATENDIMENTO, atendimentoRequestJson);
 
         UUID anamneseId = criarAnamnese(atendimentoRequestJson);
         PacienteResponse pacienteResponse = buscarPaciente(atendimentoRequestJson.pacienteId());
