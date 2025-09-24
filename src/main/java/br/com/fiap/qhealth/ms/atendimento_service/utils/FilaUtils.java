@@ -8,7 +8,7 @@ public class FilaUtils {
     public static Fila converterParaFila(FilaDto filaDTO) {
         return Fila.builder()
                 .id(filaDTO.id())
-                .idUnidadeSaude(filaDTO.idUnidadeSaude())
+                .unidadeSaudeId(filaDTO.unidadeSaudeId())
                 .nomeFila(filaDTO.nomeFila())
                 .tipoFila(filaDTO.tipoFila())
                 .dataCriacao(filaDTO.dataCriacao())
@@ -19,7 +19,7 @@ public class FilaUtils {
     public static FilaDto converterParaFilaDTO(Fila fila) {
         return new FilaDto(
             fila.getId(),
-            fila.getIdUnidadeSaude(),
+            fila.getUnidadeSaudeId(),
             fila.getNomeFila(),
             fila.getTipoFila(),
             fila.getDataCriacao(),

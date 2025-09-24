@@ -44,7 +44,7 @@ public class AtendimentoServiceTest {
 
         assertEquals(dto.id(), result.id());
         assertEquals(dto.cpf(), result.cpf());
-        assertEquals(dto.idAnamnese(), result.idAnamnese());
+        assertEquals(dto.anamneseId(), result.anamneseId());
     }
 
     @Test
@@ -56,7 +56,7 @@ public class AtendimentoServiceTest {
 
         Atendimento entity = Atendimento.builder()
                 .id(id)
-                .idAnamnese(anamneseId)
+                .anamneseId(anamneseId)
                 .cpf(cpf)
                 .dataCriacao(now)
                 .dataUltimaAlteracao(now)
@@ -69,6 +69,6 @@ public class AtendimentoServiceTest {
         assertEquals(1, result.size());
         assertEquals(id, result.get(0).id());
         assertEquals(cpf, result.get(0).cpf());
-        assertEquals(anamneseId, result.get(0).idAnamnese());
+        assertEquals(anamneseId, result.get(0).anamneseId());
     }
 }

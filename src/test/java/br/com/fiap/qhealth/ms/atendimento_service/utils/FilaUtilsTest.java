@@ -24,7 +24,7 @@ public class FilaUtilsTest {
         Fila entity = FilaUtils.converterParaFila(filaDto);
 
         assertEquals(id, entity.getId());
-        assertEquals(unidadeId, entity.getIdUnidadeSaude());
+        assertEquals(unidadeId, entity.getUnidadeSaudeId());
         assertEquals(nome, entity.getNomeFila());
         assertEquals(tipo, entity.getTipoFila());
         assertEquals(now, entity.getDataCriacao());
@@ -41,7 +41,7 @@ public class FilaUtilsTest {
 
         Fila entity = Fila.builder()
                 .id(id)
-                .idUnidadeSaude(unidadeId)
+                .unidadeSaudeId(unidadeId)
                 .nomeFila(nome)
                 .tipoFila(tipo)
                 .dataCriacao(now)
@@ -51,7 +51,7 @@ public class FilaUtilsTest {
         FilaDto filaDto = FilaUtils.converterParaFilaDTO(entity);
 
         assertEquals(id, filaDto.id());
-        assertEquals(unidadeId, filaDto.idUnidadeSaude());
+        assertEquals(unidadeId, filaDto.unidadeSaudeId());
         assertEquals(nome, filaDto.nomeFila());
         assertEquals(tipo, filaDto.tipoFila());
         assertEquals(now, filaDto.dataCriacao());

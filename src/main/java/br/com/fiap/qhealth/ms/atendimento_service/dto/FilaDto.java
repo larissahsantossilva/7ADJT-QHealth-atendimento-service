@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public record FilaDto(
     UUID id,
-    UUID idUnidadeSaude,
+    UUID unidadeSaudeId,
     String nomeFila,
     String tipoFila,
     LocalDateTime dataCriacao,

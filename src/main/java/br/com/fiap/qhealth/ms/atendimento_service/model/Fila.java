@@ -23,7 +23,7 @@ public class Fila {
     private UUID id;
 
     @Column(name = "unidade_saude_id", nullable = false)
-    private UUID idUnidadeSaude;
+    private UUID unidadeSaudeId;
 
     @Column(name = "nome_fila", nullable = false)
     private String nomeFila;

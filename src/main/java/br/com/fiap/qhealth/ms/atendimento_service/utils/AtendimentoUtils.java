@@ -22,7 +22,7 @@ public class AtendimentoUtils {
     public static Atendimento converterParaAtendimento(AtendimentoDto atendimentoDTO, FilaDto filaDTO) {
         return Atendimento.builder()
                 .id(atendimentoDTO.id())
-                .idAnamnese(atendimentoDTO.idAnamnese())
+                .anamneseId(atendimentoDTO.anamneseId())
                 .cpf(atendimentoDTO.cpf())
                 .fila(FilaUtils.converterParaFila(filaDTO))
                 .dataCriacao(atendimentoDTO.dataCriacao())
@@ -34,7 +34,7 @@ public class AtendimentoUtils {
         return new AtendimentoDto(
             atendimento.getId(),
             atendimento.getCpf(),
-            atendimento.getIdAnamnese(),
+            atendimento.getAnamneseId(),
             atendimento.getDataCriacao(),
             atendimento.getDataUltimaAlteracao()
         );

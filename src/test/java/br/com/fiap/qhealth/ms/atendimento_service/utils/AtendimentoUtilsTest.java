@@ -28,7 +28,7 @@ public class AtendimentoUtilsTest {
 
         assertEquals(id, dto.id());
         assertEquals(cpf, dto.cpf());
-        assertEquals(anamneseId, dto.idAnamnese());
+        assertEquals(anamneseId, dto.anamneseId());
         assertEquals(now, dto.dataCriacao());
         assertEquals(now, dto.dataUltimaAlteracao());
     }
@@ -47,7 +47,7 @@ public class AtendimentoUtilsTest {
         Atendimento entity = AtendimentoUtils.converterParaAtendimento(dto, filaDto);
 
         assertEquals(id, entity.getId());
-        assertEquals(anamneseId, entity.getIdAnamnese());
+        assertEquals(anamneseId, entity.getAnamneseId());
         assertEquals(cpf, entity.getCpf());
         assertEquals(now, entity.getDataCriacao());
         assertEquals(now, entity.getDataUltimaAlteracao());
@@ -63,7 +63,7 @@ public class AtendimentoUtilsTest {
 
         Atendimento entity = Atendimento.builder()
                 .id(id)
-                .idAnamnese(anamneseId)
+                .anamneseId(anamneseId)
                 .cpf(cpf)
                 .dataCriacao(now)
                 .dataUltimaAlteracao(now)
@@ -72,7 +72,7 @@ public class AtendimentoUtilsTest {
         AtendimentoDto dto = AtendimentoUtils.converterParaAtendimentoDTO(entity);
 
         assertEquals(id, dto.id());
-        assertEquals(anamneseId, dto.idAnamnese());
+        assertEquals(anamneseId, dto.anamneseId());
         assertEquals(cpf, dto.cpf());
         assertEquals(now, dto.dataCriacao());
         assertEquals(now, dto.dataUltimaAlteracao());

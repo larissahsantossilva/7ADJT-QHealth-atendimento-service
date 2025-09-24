@@ -6,7 +6,7 @@ import java.util.UUID;
 public record AtendimentoDto(
     UUID id,
     String cpf,
-    UUID idAnamnese,
+    UUID anamneseId,
     LocalDateTime dataCriacao,
     LocalDateTime dataUltimaAlteracao
 ) {}

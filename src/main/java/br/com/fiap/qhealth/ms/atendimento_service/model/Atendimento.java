@@ -23,7 +23,7 @@ public class Atendimento {
     private String cpf;
 
     @Column(name = "anamnese_id", nullable = false)
-    private UUID idAnamnese;
+    private UUID anamneseId;
 
     @CreationTimestamp
     @Column(name = "data_criacao", nullable = false, updatable = false)
