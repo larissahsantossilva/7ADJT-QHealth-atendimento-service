@@ -2,7 +2,7 @@ package br.com.fiap.qhealth.ms.atendimento_service.service;
 
 import br.com.fiap.qhealth.ms.atendimento_service.model.AtendimentoDto;
 import br.com.fiap.qhealth.ms.atendimento_service.model.FilaDto;
-import br.com.fiap.qhealth.ms.atendimento_service.entity.Atendimento;
+import br.com.fiap.qhealth.ms.atendimento_service.entity.AtendimentoEntity;
 import br.com.fiap.qhealth.ms.atendimento_service.repository.AtendimentoRepository;
 import br.com.fiap.qhealth.ms.atendimento_service.utils.AtendimentoUtils;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +22,13 @@ public class AtendimentoService {
     public final AtendimentoRepository atendimentoRepository;
 
     public AtendimentoDto salvarAtendimento(AtendimentoDto atendimento, FilaDto fila) {
-        Atendimento atendimentoEntity = atendimentoRepository.save(converterParaAtendimento(atendimento, fila));
+        AtendimentoEntity atendimentoEntity = atendimentoRepository.save(converterParaAtendimento(atendimento, fila));
         logger.info("Atendimento salvo com sucesso: {}", atendimentoEntity);
         return converterParaAtendimentoDTO(atendimentoEntity);
     }
 
     public List<AtendimentoDto> buscarAtendimentos(){
-        List<Atendimento> atendimentos = atendimentoRepository.findAll();
+        List<AtendimentoEntity> atendimentos = atendimentoRepository.findAll();
         List<AtendimentoDto> list = atendimentos.stream().map(AtendimentoUtils::converterParaAtendimentoDTO).toList();
         return list;
     }

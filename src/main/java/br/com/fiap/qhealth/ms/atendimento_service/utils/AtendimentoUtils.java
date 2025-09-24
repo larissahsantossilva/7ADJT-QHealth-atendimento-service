@@ -2,7 +2,7 @@ package br.com.fiap.qhealth.ms.atendimento_service.utils;
 
 import br.com.fiap.qhealth.ms.atendimento_service.model.AtendimentoDto;
 import br.com.fiap.qhealth.ms.atendimento_service.model.FilaDto;
-import br.com.fiap.qhealth.ms.atendimento_service.entity.Atendimento;
+import br.com.fiap.qhealth.ms.atendimento_service.entity.AtendimentoEntity;
 import br.com.fiap.qhealth.ms.atendimento_service.listener.json.AtendimentoRequestJson;
 
 import java.util.UUID;
@@ -19,8 +19,8 @@ public class AtendimentoUtils {
         );
     }
 
-    public static Atendimento converterParaAtendimento(AtendimentoDto atendimentoDTO, FilaDto filaDTO) {
-        return Atendimento.builder()
+    public static AtendimentoEntity converterParaAtendimento(AtendimentoDto atendimentoDTO, FilaDto filaDTO) {
+        return AtendimentoEntity.builder()
                 .id(atendimentoDTO.id())
                 .idAnamnese(atendimentoDTO.idAnamnese())
                 .cpf(atendimentoDTO.cpf())
@@ -30,7 +30,7 @@ public class AtendimentoUtils {
             .build();
     }
 
-    public static AtendimentoDto converterParaAtendimentoDTO(Atendimento atendimento) {
+    public static AtendimentoDto converterParaAtendimentoDTO(AtendimentoEntity atendimento) {
         return new AtendimentoDto(
             atendimento.getId(),
             atendimento.getCpf(),

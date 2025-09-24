@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Atendimento {
+public class AtendimentoEntity {
     @Id
     @Column(name = "id", nullable = false, unique = true)
     private UUID id;
@@ -36,5 +36,5 @@ public class Atendimento {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fila_id", nullable = false)
-    private Fila fila;
+    private FilaEntity fila;
 }
