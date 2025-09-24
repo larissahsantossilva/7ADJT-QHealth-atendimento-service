@@ -73,16 +73,16 @@ class AtendimentoListenerTest {
 
         // Mock da busca do Paciente
         PacienteResponse pacienteResponse = new PacienteResponse(
-            UUID.randomUUID(),           // id
-            "John Doe",                  // nome
-            "john.doe@example.com",      // email
-            "johndoe",                   // login
-            "12345678900",               // cpf
-            "M",                         // genero
-            "+5511999999999",            // telefone
-            LocalDate.of(1990, 1, 1),    // dataNascimento
-            LocalDateTime.now(),         // dataCriacao
-            LocalDateTime.now()          // dataUltimaAlteracao
+            UUID.randomUUID(),
+            "John Doe",
+            "john.doe@example.com",
+            "johndoe",
+            "12345678900",
+            "M",
+            "+5511999999999",
+            LocalDate.of(1990, 1, 1),
+            LocalDateTime.now(),
+            LocalDateTime.now()
         );
         when(pacienteService.buscarPacientePorId(anyString())).thenReturn(ResponseEntity.ok(pacienteResponse));
 
