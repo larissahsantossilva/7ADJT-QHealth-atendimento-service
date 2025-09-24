@@ -41,13 +41,13 @@ public class AtendimentoListener {
         log.info(">>> Mensagem recebida da fila [{}]: '{}'", QUEUE_NOVO_ATENDIMENTO, atendimentoRequestJson);
 
         UUID anamneseId = criarAnamnese(atendimentoRequestJson);
-        PacienteResponse pacienteResponse = buscarPaciente(atendimentoRequestJson.pacienteId());
+        PacienteResponse pacienteResponse = buscarPaciente(atendimentoRequestJson.cpf());
         TriagemResponse triagemResponse = definirTriagem(anamneseId, atendimentoRequestJson, pacienteResponse);
         FilaDTO fila = escolherFila(triagemResponse);
         AtendimentoDTO atendimento = salvarAtendimento(atendimentoRequestJson, fila, anamneseId);
         AtendimentoUbsRequestJson atendimentoUbsRequestJson = new AtendimentoUbsRequestJson(
             atendimento.getId(),
-            atendimento.getIdPaciente(),
+            atendimento.getCpf(),
             fila.getId(),
             atendimento.getDataCriacao(),
             atendimento.getDataUltimaAlteracao()
@@ -84,8 +84,8 @@ public class AtendimentoListener {
         return response.getBody();
     }
 
-    private PacienteResponse buscarPaciente(UUID pacienteId) {
-        ResponseEntity<PacienteResponse> response = pacienteService.buscarPacientePorId(pacienteId);
+    private PacienteResponse buscarPaciente(String cpf) {
+        ResponseEntity<PacienteResponse> response = pacienteService.buscarPacientePorId(cpf);
         return response.getBody();
     }
 

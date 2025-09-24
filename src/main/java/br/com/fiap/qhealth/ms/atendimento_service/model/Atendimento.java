@@ -21,8 +21,8 @@ public class Atendimento {
     @Column(name = "id", nullable = false, unique = true)
     private UUID id;
 
-    @Column(name = "paciente_id", nullable = false)
-    private UUID idPaciente;
+    @Column(name = "cpf", nullable = false)
+    private String cpf;
 
     @Column(name = "anamnese_id", nullable = false)
     private UUID idAnamnese;

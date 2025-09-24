@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public record AtendimentoRequestJson(
     UUID id,
-    UUID pacienteId,
+    String cpf,
     Boolean fumante,
     Boolean gravida,
     Boolean diabetico,

@@ -108,7 +108,7 @@ services:
 #      start_period: 30s  # Adicionado: espera 30 segundos antes da primeira verificação
 
   atendimento-usuario:
-    image: correiagui/qhealth-atendimento-usuario:latest
+    image: correiagui/qhealth-usuario:latest
     container_name: atendimento_usuario
     depends_on:
       - atendimento-usuario-db
@@ -128,7 +128,7 @@ services:
 #      retries: 10
 
   atendimento-receiver:
-    image: larissahsilva/qhealth-receiver:latest
+    image: dsouzajm/qhealth-receiver:latest
     container_name: atendimento_receiver
     depends_on:
       - atendimento-receiver-db

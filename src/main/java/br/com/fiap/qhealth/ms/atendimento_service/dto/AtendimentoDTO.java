@@ -11,7 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AtendimentoDTO {
     private UUID id;
-    private UUID idPaciente;
+    private String cpf;
     private UUID idFila;
     private UUID idAnamnese;
     private LocalDateTime dataCriacao;

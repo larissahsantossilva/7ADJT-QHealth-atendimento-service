@@ -12,7 +12,7 @@ public class AtendimentoUtils {
     public static AtendimentoDTO converterParaAtendimentoDTO(AtendimentoRequestJson atendimentoRequestJson, UUID anamneseId, FilaDTO fila) {
         AtendimentoDTO atendimentoDto = AtendimentoDTO.builder()
                 .id(atendimentoRequestJson.id())
-                .idPaciente(atendimentoRequestJson.pacienteId())
+                .cpf(atendimentoRequestJson.cpf())
                 .idAnamnese(anamneseId)
                 .idFila(fila.getId())
                 .dataCriacao(atendimentoRequestJson.dataCriacao())
@@ -25,7 +25,7 @@ public class AtendimentoUtils {
         Atendimento atendimento = Atendimento.builder()
                 .id(atendimentoDTO.getId())
                 .idAnamnese(atendimentoDTO.getIdAnamnese())
-                .idPaciente(atendimentoDTO.getIdPaciente())
+                .cpf(atendimentoDTO.getCpf())
                 .fila(FilaUtils.converterParaFila(filaDTO))
                 .dataCriacao(atendimentoDTO.getDataCriacao())
                 .dataUltimaAlteracao(atendimentoDTO.getDataUltimaAlteracao())
@@ -37,7 +37,7 @@ public class AtendimentoUtils {
         AtendimentoDTO atendimentoDto = AtendimentoDTO.builder()
                 .id(atendimento.getId())
                 .idAnamnese(atendimento.getIdAnamnese())
-                .idPaciente(atendimento.getIdPaciente())
+                .cpf(atendimento.getCpf())
                 .dataCriacao(atendimento.getDataCriacao())
                 .dataUltimaAlteracao(atendimento.getDataUltimaAlteracao())
             .build();

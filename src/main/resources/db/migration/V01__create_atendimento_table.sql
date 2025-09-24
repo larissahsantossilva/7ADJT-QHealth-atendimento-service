@@ -20,7 +20,7 @@ CREATE TABLE fila (
 -- Criação da tabela de itens do pedido
 CREATE TABLE atendimento (
     id UUID PRIMARY KEY,
-    paciente_id UUID NOT NULL,
+    cpf VARCHAR(11) NOT NULL,
     fila_id UUID NOT NULL,
     anamnese_id UUID NOT NULL,
     data_criacao TIMESTAMP NOT NULL DEFAULT NOW(),

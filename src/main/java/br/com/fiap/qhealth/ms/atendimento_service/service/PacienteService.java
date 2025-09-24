@@ -6,16 +6,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @RequiredArgsConstructor
 @Service
 public class PacienteService {
 
     private final PacienteClient pacienteClient;
 
-    public ResponseEntity<PacienteResponse> buscarPacientePorId(UUID id) {
-        ResponseEntity<PacienteResponse> pacienteResponse = pacienteClient.buscarPacientePorId(id);
+    public ResponseEntity<PacienteResponse> buscarPacientePorId(String cpf) {
+        ResponseEntity<PacienteResponse> pacienteResponse = pacienteClient.buscarPacientePorId(cpf);
         return pacienteResponse;
     }
 }

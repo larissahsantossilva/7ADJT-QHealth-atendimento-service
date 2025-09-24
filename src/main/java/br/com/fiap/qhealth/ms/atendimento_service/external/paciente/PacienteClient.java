@@ -11,5 +11,5 @@ import java.util.UUID;
 public interface PacienteClient {
 
     @GetMapping("/{id}")
-    ResponseEntity<PacienteResponse> buscarPacientePorId(@PathVariable("id") UUID id);
+    ResponseEntity<PacienteResponse> buscarPacientePorId(@PathVariable("id") String cpf);
 }
