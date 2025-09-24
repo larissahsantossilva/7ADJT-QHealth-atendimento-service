@@ -1,0 +1,157 @@
+services:
+  atendimento-service-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: atendimento_service_db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - atendimento_service_pgdata:/var/lib/postgresql/data
+    restart: always
+
+  ubs-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ubs_db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5431:5432"
+    volumes:
+      - ubs_pgdata:/var/lib/postgresql/data
+    restart: always
+
+  atendimento-usuario-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: atendimento_usuario_db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5434:5432"
+    volumes:
+      - atendimento_usuario_pgdata:/var/lib/postgresql/data
+    restart: always
+
+  atendimento-receiver-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: atendimento_receiver_db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5435:5432"
+    volumes:
+      - atendimento_receiver_pgdata:/var/lib/postgresql/data
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_pedido
+    ports:
+      - "5673:5672"      # Porta AMQP (interna 5672)
+      - "15673:15672"    # UI Web do RabbitMQ
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  ubs:
+    image: correiagui/qhealth-ubs:latest
+    container_name: ubs
+    depends_on:
+      - ubs-db
+    environment:
+      POSTGRES_HOST: ubs-db
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ubs_db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "8080:8080"
+    restart: always
+
+  atendimento-usuario:
+    image: correiagui/qhealth-usuario:latest
+    container_name: atendimento_usuario
+    depends_on:
+      - atendimento-usuario-db
+    environment:
+      POSTGRES_HOST: atendimento-usuario-db
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: atendimento_usuario_db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "8081:8080"
+    restart: always
+
+  atendimento-receiver:
+    image: dsouzajm/qhealth-receiver:latest
+    container_name: atendimento_receiver
+    depends_on:
+      - atendimento-receiver-db
+    environment:
+      POSTGRES_HOST: atendimento-receiver-db
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: atendimento_receiver_db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      RABBITMQ_USER: ${RABBITMQ_USER}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASS}
+      RABBITMQ_PORT: 5672
+      RABBITMQ_HOST: rabbitmq
+    ports:
+      - "8083:8080"
+    restart: always
+
+  triagem:
+    image: larissahsilva/qhealth-triagem:latest
+    container_name: triagem
+    ports:
+      - "8082:8080"
+    restart: always
+
+  atendimento-service:
+    build:
+      context: .
+    container_name: atendimento_service
+    depends_on:
+      - rabbitmq
+      - ubs
+      - atendimento-usuario
+      - atendimento-receiver
+      - triagem
+    ports:
+      - "8084:8080"
+      - "5005:5005"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://atendimento-service-db:5432/atendimento_service_db
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: ${RABBITMQ_USER}
+      SPRING_RABBITMQ_PASSWORD: ${RABBITMQ_PASS}
+
+      UBS_URL: http://ubs:8080
+      ATENDIMENTO_USUARIO_URL: http://atendimento-usuario:8080
+
+      _JAVA_OPTIONS: >
+        -Xdebug 
+        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    restart: always
+
+volumes:
+  atendimento_service_pgdata:
+  ubs_pgdata:
+  atendimento_usuario_pgdata:
+  atendimento_receiver_pgdata:
