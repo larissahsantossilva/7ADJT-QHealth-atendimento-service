@@ -10,11 +10,6 @@ services:
     volumes:
       - atendimento_service_pgdata:/var/lib/postgresql/data
     restart: always
-#    healthcheck:
-#      test: [ "CMD-SHELL", "pg_isready -U $POSTGRES_USER" ]
-#      interval: 5s
-#      timeout: 5s
-#      retries: 5
 
   ubs-db:
     image: postgres:17-alpine
@@ -27,11 +22,6 @@ services:
     volumes:
       - ubs_pgdata:/var/lib/postgresql/data
     restart: always
-#    healthcheck:
-#      test: [ "CMD-SHELL", "pg_isready -U $POSTGRES_USER" ]
-#      interval: 5s
-#      timeout: 5s
-#      retries: 5
 
   atendimento-usuario-db:
     image: postgres:17-alpine
@@ -44,11 +34,6 @@ services:
     volumes:
       - atendimento_usuario_pgdata:/var/lib/postgresql/data
     restart: always
-#    healthcheck:
-#      test: [ "CMD-SHELL", "pg_isready -U $POSTGRES_USER" ]
-#      interval: 5s
-#      timeout: 5s
-#      retries: 5
 
   atendimento-receiver-db:
     image: postgres:17-alpine
@@ -61,11 +46,6 @@ services:
     volumes:
       - atendimento_receiver_pgdata:/var/lib/postgresql/data
     restart: always
-#    healthcheck:
-#      test: [ "CMD-SHELL", "pg_isready -U $POSTGRES_USER" ]
-#      interval: 5s
-#      timeout: 5s
-#      retries: 5
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -97,15 +77,6 @@ services:
     ports:
       - "8080:8080"
     restart: always
-#    healthcheck:
-#      # --- HEALTCHECK CORRIGIDO ---
-#      # Aumentamos o tempo de início, o intervalo e os retries para dar
-#      # tempo à aplicação Spring Boot de iniciar completamente.
-#      test: [ "CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1" ]
-#      interval: 15s      # Aumentado para 15 segundos
-#      timeout: 10s       # Aumentado para 10 segundos
-#      retries: 10        # Aumentado para 10 tentativas
-#      start_period: 30s  # Adicionado: espera 30 segundos antes da primeira verificação
 
   atendimento-usuario:
     image: correiagui/qhealth-usuario:latest
@@ -121,11 +92,6 @@ services:
     ports:
       - "8081:8080"
     restart: always
-#    healthcheck:
-#      test: [ "CMD-SHELL", "curl -f http://localhost:8080 || exit 1" ]
-#      interval: 10s
-#      timeout: 10s
-#      retries: 10
 
   atendimento-receiver:
     image: dsouzajm/qhealth-receiver:latest
@@ -145,11 +111,6 @@ services:
     ports:
       - "8083:8080"
     restart: always
-#    healthcheck:
-#      test: [ "CMD-SHELL", "curl -f http://localhost:8080 || exit 1" ]
-#      interval: 10s
-#      timeout: 10s
-#      retries: 10
 
   triagem:
     image: larissahsilva/qhealth-triagem:latest
@@ -157,31 +118,17 @@ services:
     ports:
       - "8082:8080"
     restart: always
-#    healthcheck:
-#      test: [ "CMD-SHELL", "curl -f http://localhost:8080 || exit 1" ]
-#      interval: 10s
-#      timeout: 10s
-#      retries: 10
 
   atendimento-service:
     build:
       context: .
     container_name: atendimento_service
     depends_on:
-      rabbitmq:
-        condition: service_healthy
-#      ubs-db:
-#        condition: service_healthy
-#      atendimento-usuario-db:
-#        condition: service_healthy
-#      atendimento-receiver-db:
-#        condition: service_healthy
-#      atendimento-usuario:
-#        condition: service_healthy
-#      ubs:
-#        condition: service_healthy
-#      triagem:
-#        condition: service_healthy
+      - rabbitmq
+      - ubs
+      - atendimento-usuario
+      - atendimento-receiver
+      - triagem
     ports:
       - "8084:8080"
       - "5005:5005"
