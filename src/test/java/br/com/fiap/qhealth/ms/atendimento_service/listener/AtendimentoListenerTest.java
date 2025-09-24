@@ -44,7 +44,7 @@ class AtendimentoListenerTest {
     private AtendimentoProducer atendimentoProducer;
 
     @InjectMocks
-    private AtendimentoListener atendimentoListener; // A classe que estamos a testar, com as dependências mockadas injetadas
+    private AtendimentoListener atendimentoListener;
 
     private AtendimentoRequestJson requestJson;
 
