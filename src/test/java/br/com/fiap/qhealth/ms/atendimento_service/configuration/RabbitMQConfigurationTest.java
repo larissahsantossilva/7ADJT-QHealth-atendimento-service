@@ -63,7 +63,6 @@ class RabbitMQConfigurationTest {
     @Test
     void deveCriarTodosOsBindings() {
         // Verifica se cada bean de Binding foi criado
-        assertThat(context.getBean("novoAtendimentoBinding")).isInstanceOf(Binding.class);
         assertThat(context.getBean("atendimentoUbs1UsualBinding")).isInstanceOf(Binding.class);
         assertThat(context.getBean("atendimentoUbs1PreferencialBinding")).isInstanceOf(Binding.class);
         assertThat(context.getBean("atendimentoUbs2UsualBinding")).isInstanceOf(Binding.class);

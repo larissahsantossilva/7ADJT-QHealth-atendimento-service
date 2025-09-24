@@ -13,8 +13,6 @@ import static jakarta.persistence.GenerationType.AUTO;
 @Entity
 @Table(name = "fila", schema = "atendimento")
 @Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class FilaEntity {
