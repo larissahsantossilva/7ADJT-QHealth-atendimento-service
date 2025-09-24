@@ -65,29 +65,21 @@ class AtendimentoListenerTest {
 
     @Test
     void deveProcessarMensagemEChamarTodosOsServicosCorretamenteParaPacienteSemPrioridade() {
-        // Arrange (Configuração dos Mocks)
-
-        // Mock da criação da Anamnese
         UUID anamneseId = UUID.randomUUID();
         when(anamneseService.criarAnamnese(any(AnamneseRequest.class))).thenReturn(ResponseEntity.ok(anamneseId));
 
-        // Mock da busca do Paciente
         PacienteResponse pacienteResponse = mockPacienteResponse();
         when(pacienteService.buscarPacientePorId(anyString())).thenReturn(ResponseEntity.ok(pacienteResponse));
 
-        // Mock da definição da Triagem (não preferencial, neste caso)
         TriagemResponse triagemResponse = new TriagemResponse(false);
         when(triagemService.definirTriagem(any())).thenReturn(ResponseEntity.ok(triagemResponse));
 
-        // Mock da escolha da Fila
         FilaDto filaDto = mockFilaDto();
         when(filaService.buscarFilaPorNomeFila(contains("atendimento.ubs-"))).thenReturn(filaDto);
 
-        // Mock do salvamento do Atendimento
         AtendimentoDto atendimentoDto = mockAtendimentoDto(anamneseId);
         when(atendimentoService.salvarAtendimento(any(), any())).thenReturn(atendimentoDto);
 
-        // Mock do Producer (apenas para garantir que ele é chamado)
         doNothing().when(atendimentoProducer).enviarAtendimentoParaFila(any(), any(), any(), any());
 
         // Act (Execução do método a ser testado)
@@ -104,32 +96,23 @@ class AtendimentoListenerTest {
 
     @Test
     void deveProcessarMensagemEChamarTodosOsServicosCorretamenteParaPacienteComPrioridade() {
-        // Arrange (Configuração dos Mocks)
-
-        // Mock da criação da Anamnese
         UUID anamneseId = UUID.randomUUID();
         when(anamneseService.criarAnamnese(any(AnamneseRequest.class))).thenReturn(ResponseEntity.ok(anamneseId));
 
-        // Mock da busca do Paciente
         PacienteResponse pacienteResponse = mockPacienteResponse();
         when(pacienteService.buscarPacientePorId(anyString())).thenReturn(ResponseEntity.ok(pacienteResponse));
 
-        // Mock da definição da Triagem (não preferencial, neste caso)
         TriagemResponse triagemResponse = new TriagemResponse(true);
         when(triagemService.definirTriagem(any())).thenReturn(ResponseEntity.ok(triagemResponse));
 
-        // Mock da escolha da Fila
         FilaDto filaDto = mockFilaDto();
         when(filaService.buscarFilaPorNomeFila(contains("atendimento.ubs-"))).thenReturn(filaDto);
 
-        // Mock do salvamento do Atendimento
         AtendimentoDto atendimentoDto = mockAtendimentoDto(anamneseId);
         when(atendimentoService.salvarAtendimento(any(), any())).thenReturn(atendimentoDto);
 
-        // Mock do Producer (apenas para garantir que ele é chamado)
         doNothing().when(atendimentoProducer).enviarAtendimentoParaFila(any(), any(), any(), any());
 
-        // Act (Execução do método a ser testado)
         atendimentoListener.escutarMensagem(requestJson);
 
         // Assert (Verificação das interações)
