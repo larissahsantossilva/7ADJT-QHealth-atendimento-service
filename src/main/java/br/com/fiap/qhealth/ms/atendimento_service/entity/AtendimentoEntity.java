@@ -11,11 +11,10 @@ import java.util.UUID;
 @Entity
 @Table(name = "atendimento", schema = "atendimento")
 @Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class AtendimentoEntity {
+
     @Id
     @Column(name = "id", nullable = false, unique = true)
     private UUID id;

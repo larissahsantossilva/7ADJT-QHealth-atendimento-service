@@ -18,6 +18,7 @@ import static jakarta.persistence.GenerationType.AUTO;
 @AllArgsConstructor
 @Builder
 public class FilaEntity {
+
     @Id
     @GeneratedValue(strategy = AUTO)
     @Column(name = "id", nullable = true, unique = true)
