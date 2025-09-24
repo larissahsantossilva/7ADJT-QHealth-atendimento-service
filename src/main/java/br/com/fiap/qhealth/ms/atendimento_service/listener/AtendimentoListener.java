@@ -1,6 +1,6 @@
 package br.com.fiap.qhealth.ms.atendimento_service.listener;
 
-import br.com.fiap.qhealth.ms.atendimento_service.config.RabbitMQConfig;
+import br.com.fiap.qhealth.ms.atendimento_service.configuration.RabbitMQConfiguration;
 import br.com.fiap.qhealth.ms.atendimento_service.model.AtendimentoDto;
 import br.com.fiap.qhealth.ms.atendimento_service.model.FilaDto;
 import br.com.fiap.qhealth.ms.atendimento_service.external.anamnese.request.AnamneseRequest;
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-import static br.com.fiap.qhealth.ms.atendimento_service.config.RabbitMQConfig.QUEUE_NOVO_ATENDIMENTO;
+import static br.com.fiap.qhealth.ms.atendimento_service.configuration.RabbitMQConfiguration.QUEUE_NOVO_ATENDIMENTO;
 
 @RequiredArgsConstructor
 @Service
@@ -55,7 +55,7 @@ public class AtendimentoListener {
             atendimentoUbsRequestJson,
             fila.nomeFila(),
             fila.nomeFila(),
-            RabbitMQConfig.EXCHANGE_NAME
+            RabbitMQConfiguration.EXCHANGE_NAME
         );
 
         log.info(">>> Atendimento salvo: {}", atendimento);

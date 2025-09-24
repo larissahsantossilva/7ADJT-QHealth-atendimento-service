@@ -1,4 +1,4 @@
-package br.com.fiap.qhealth.ms.atendimento_service.config;
+package br.com.fiap.qhealth.ms.atendimento_service.configuration;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RabbitMQConfig {
+public class RabbitMQConfiguration {
     public static final String QUEUE_NOVO_ATENDIMENTO = "novo.atendimento.queue";
     public static final String ROUTING_KEY_NOVO_ATENDIMENTO = "novo.atendimento";
 

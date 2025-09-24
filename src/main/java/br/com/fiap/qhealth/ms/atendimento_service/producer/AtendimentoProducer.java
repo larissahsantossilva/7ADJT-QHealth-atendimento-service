@@ -1,7 +1,5 @@
 package br.com.fiap.qhealth.ms.atendimento_service.producer;
 
-import br.com.fiap.qhealth.ms.atendimento_service.config.RabbitMQConfig;
-import br.com.fiap.qhealth.ms.atendimento_service.listener.json.AtendimentoRequestJson;
 import br.com.fiap.qhealth.ms.atendimento_service.producer.json.AtendimentoUbsRequestJson;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
