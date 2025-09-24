@@ -1,4 +1,4 @@
-package br.com.fiap.qhealth.ms.atendimento_service.model;
+package br.com.fiap.qhealth.ms.atendimento_service.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,7 +18,6 @@ import static jakarta.persistence.GenerationType.AUTO;
 @AllArgsConstructor
 @Builder
 public class Fila {
-
     @Id
     @GeneratedValue(strategy = AUTO)
     @Column(name = "id", nullable = true, unique = true)
@@ -40,5 +39,4 @@ public class Fila {
     @UpdateTimestamp
     @Column(name = "data_ultima_alteracao")
     private LocalDateTime dataUltimaAlteracao;
-
 }

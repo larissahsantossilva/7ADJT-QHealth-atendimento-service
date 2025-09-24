@@ -1,6 +1,6 @@
 package br.com.fiap.qhealth.ms.atendimento_service.service;
 
-import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDTO;
+import br.com.fiap.qhealth.ms.atendimento_service.model.FilaDto;
 import br.com.fiap.qhealth.ms.atendimento_service.external.ubs.response.UnidadeSaudeResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -14,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Component
 public class InicializacaoService implements CommandLineRunner {
-
     private static final Logger log = LoggerFactory.getLogger(InicializacaoService.class);
 
     private final FilaService filaService;
@@ -47,27 +46,27 @@ public class InicializacaoService implements CommandLineRunner {
     }
 
     private void createFilasForUbs(List<UnidadeSaudeResponse> ubsList) {
-        for (int i = 0; i < ubsList.size(); i++) {
-            UnidadeSaudeResponse ubs = ubsList.get(i);
-            log.info("UBS existente: {}", ubs);
-
-            filaService.salvarFila(new FilaDTO(
-                null,
-                ubs.id(),
-                "atendimento.ubs-" + (i + 1),
-                "NORMAL",
-                null,
-                null
-            ));
-
-            filaService.salvarFila(new FilaDTO(
-                null,
-                ubs.id(),
-                "atendimento.ubs-" + (i + 1) + "-preferencial",
-                "PREFERENCIAL",
-                null,
-                null
-            ));
+        if(ubsList != null && !ubsList.isEmpty()) {
+            for (int i = 0; i < ubsList.size(); i++) {
+                UnidadeSaudeResponse ubs = ubsList.get(i);
+                log.info("UBS existente: {}", ubs);
+                filaService.salvarFila(new FilaDto(
+                    null,
+                    ubs.id(),
+                    "atendimento.ubs-" + (i + 1),
+                    "NORMAL",
+                    null,
+                    null
+                ));
+                filaService.salvarFila(new FilaDto(
+                    null,
+                    ubs.id(),
+                    "atendimento.ubs-" + (i + 1) + "-preferencial",
+                    "PREFERENCIAL",
+                    null,
+                    null
+                ));
+            }
         }
     }
 }

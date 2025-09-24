@@ -1,31 +1,29 @@
 package br.com.fiap.qhealth.ms.atendimento_service.utils;
 
-import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDTO;
-import br.com.fiap.qhealth.ms.atendimento_service.model.Fila;
+import br.com.fiap.qhealth.ms.atendimento_service.model.FilaDto;
+import br.com.fiap.qhealth.ms.atendimento_service.entity.Fila;
 
 public class FilaUtils {
 
-    public static Fila converterParaFila(FilaDTO filaDTO) {
-        Fila fila = Fila.builder()
-                .id(filaDTO.getId())
-                .idUnidadeSaude(filaDTO.getIdUnidadeSaude())
-                .nomeFila(filaDTO.getNomeFila())
-                .tipoFila(filaDTO.getTipoFila())
-                .dataCriacao(filaDTO.getDataCriacao())
-                .dataUltimaAlteracao(filaDTO.getDataUltimaAlteracao())
+    public static Fila converterParaFila(FilaDto filaDTO) {
+        return Fila.builder()
+                .id(filaDTO.id())
+                .idUnidadeSaude(filaDTO.idUnidadeSaude())
+                .nomeFila(filaDTO.nomeFila())
+                .tipoFila(filaDTO.tipoFila())
+                .dataCriacao(filaDTO.dataCriacao())
+                .dataUltimaAlteracao(filaDTO.dataUltimaAlteracao())
             .build();
-        return fila;
     }
 
-    public static FilaDTO converterParaFilaDTO(Fila fila) {
-        FilaDTO filaDto = FilaDTO.builder()
-                .id(fila.getId())
-                .idUnidadeSaude(fila.getIdUnidadeSaude())
-                .nomeFila(fila.getNomeFila())
-                .tipoFila(fila.getTipoFila())
-                .dataCriacao(fila.getDataCriacao())
-                .dataUltimaAlteracao(fila.getDataUltimaAlteracao())
-            .build();
-        return filaDto;
+    public static FilaDto converterParaFilaDTO(Fila fila) {
+        return new FilaDto(
+            fila.getId(),
+            fila.getIdUnidadeSaude(),
+            fila.getNomeFila(),
+            fila.getTipoFila(),
+            fila.getDataCriacao(),
+            fila.getDataUltimaAlteracao()
+        );
     }
 }

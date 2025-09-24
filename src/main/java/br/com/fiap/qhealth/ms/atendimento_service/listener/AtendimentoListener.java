@@ -1,8 +1,8 @@
 package br.com.fiap.qhealth.ms.atendimento_service.listener;
 
 import br.com.fiap.qhealth.ms.atendimento_service.config.RabbitMQConfig;
-import br.com.fiap.qhealth.ms.atendimento_service.dto.AtendimentoDTO;
-import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDTO;
+import br.com.fiap.qhealth.ms.atendimento_service.model.AtendimentoDto;
+import br.com.fiap.qhealth.ms.atendimento_service.model.FilaDto;
 import br.com.fiap.qhealth.ms.atendimento_service.external.anamnese.request.AnamneseRequest;
 import br.com.fiap.qhealth.ms.atendimento_service.external.paciente.response.PacienteResponse;
 import br.com.fiap.qhealth.ms.atendimento_service.external.triagem.request.TriagemAnamneseRequest;
@@ -27,7 +27,6 @@ import static br.com.fiap.qhealth.ms.atendimento_service.config.RabbitMQConfig.Q
 @RequiredArgsConstructor
 @Service
 public class AtendimentoListener {
-
     private static final Logger log = LoggerFactory.getLogger(AtendimentoListener.class);
     private final AtendimentoService atendimentoService;
     private final FilaService filaService;
@@ -43,16 +42,21 @@ public class AtendimentoListener {
         UUID anamneseId = criarAnamnese(atendimentoRequestJson);
         PacienteResponse pacienteResponse = buscarPaciente(atendimentoRequestJson.cpf());
         TriagemResponse triagemResponse = definirTriagem(anamneseId, atendimentoRequestJson, pacienteResponse);
-        FilaDTO fila = escolherFila(triagemResponse);
-        AtendimentoDTO atendimento = salvarAtendimento(atendimentoRequestJson, fila, anamneseId);
+        FilaDto fila = escolherFila(triagemResponse);
+        AtendimentoDto atendimento = salvarAtendimento(atendimentoRequestJson, fila, anamneseId);
         AtendimentoUbsRequestJson atendimentoUbsRequestJson = new AtendimentoUbsRequestJson(
-            atendimento.getId(),
-            atendimento.getCpf(),
-            fila.getId(),
-            atendimento.getDataCriacao(),
-            atendimento.getDataUltimaAlteracao()
+            atendimento.id(),
+            atendimento.cpf(),
+            fila.id(),
+            atendimento.dataCriacao(),
+            atendimento.dataUltimaAlteracao()
         );
-        atendimentoProducer.enviarAtendimentoParaFila(atendimentoUbsRequestJson, fila.getNomeFila(), fila.getNomeFila(), RabbitMQConfig.EXCHANGE_NAME);
+        atendimentoProducer.enviarAtendimentoParaFila(
+            atendimentoUbsRequestJson,
+            fila.nomeFila(),
+            fila.nomeFila(),
+            RabbitMQConfig.EXCHANGE_NAME
+        );
 
         log.info(">>> Atendimento salvo: {}", atendimento);
     }
@@ -89,9 +93,9 @@ public class AtendimentoListener {
         return response.getBody();
     }
 
-    private FilaDTO escolherFila(TriagemResponse triagemResponse) {
+    private FilaDto escolherFila(TriagemResponse triagemResponse) {
         int resultado = randomOneOrTwo();
-        FilaDTO filaDTO = null;
+        FilaDto filaDTO = null;
         if(triagemResponse.preferencial()){
             filaDTO = filaService.buscarFilaPorNomeFila("atendimento.ubs-" + resultado + "-preferencial");
         } else {
@@ -100,8 +104,8 @@ public class AtendimentoListener {
         return filaDTO;
     }
 
-    private AtendimentoDTO salvarAtendimento(AtendimentoRequestJson requestJson, FilaDTO fila, UUID anamneseId) {
-        AtendimentoDTO atendimentoDTO = AtendimentoUtils.converterParaAtendimentoDTO(requestJson, anamneseId, fila);
+    private AtendimentoDto salvarAtendimento(AtendimentoRequestJson requestJson, FilaDto fila, UUID anamneseId) {
+        AtendimentoDto atendimentoDTO = AtendimentoUtils.converterParaAtendimentoDTO(requestJson, anamneseId, fila);
         return atendimentoService.salvarAtendimento(atendimentoDTO, fila);
     }
 

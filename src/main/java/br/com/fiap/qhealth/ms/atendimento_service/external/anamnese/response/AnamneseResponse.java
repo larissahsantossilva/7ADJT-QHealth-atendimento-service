@@ -10,5 +10,5 @@ public record AnamneseResponse(
     Boolean diabetico,
     Boolean hipertenso,
     LocalDateTime dataCriacao,
-    LocalDateTime dataUltimaAlteracao)
-{}
+    LocalDateTime dataUltimaAlteracao
+) {}

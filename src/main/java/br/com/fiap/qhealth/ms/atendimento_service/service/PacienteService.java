@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class PacienteService {
-
     private final PacienteClient pacienteClient;
 
     public ResponseEntity<PacienteResponse> buscarPacientePorId(String cpf) {

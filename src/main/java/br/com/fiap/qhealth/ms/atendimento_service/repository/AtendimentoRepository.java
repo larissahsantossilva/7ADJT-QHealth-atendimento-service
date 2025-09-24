@@ -1,6 +1,6 @@
 package br.com.fiap.qhealth.ms.atendimento_service.repository;
 
-import br.com.fiap.qhealth.ms.atendimento_service.model.Atendimento;
+import br.com.fiap.qhealth.ms.atendimento_service.entity.Atendimento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

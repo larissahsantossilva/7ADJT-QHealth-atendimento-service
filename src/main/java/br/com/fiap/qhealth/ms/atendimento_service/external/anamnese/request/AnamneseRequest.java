@@ -4,5 +4,5 @@ public record AnamneseRequest(
     Boolean fumante,
     Boolean gravida,
     Boolean diabetico,
-    Boolean hipertenso)
-{}
+    Boolean hipertenso
+){}

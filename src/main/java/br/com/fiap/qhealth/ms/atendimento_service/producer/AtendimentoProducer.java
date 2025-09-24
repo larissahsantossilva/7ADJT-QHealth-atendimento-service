@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class AtendimentoProducer {
-
     private static final Logger log = LoggerFactory.getLogger(AtendimentoProducer.class);
     private final RabbitTemplate rabbitTemplate;
 
@@ -28,5 +27,4 @@ public class AtendimentoProducer {
             log.error("!!! Erro ao enviar mensagem para a fila: {}", e.getMessage());
         }
     }
-
 }
