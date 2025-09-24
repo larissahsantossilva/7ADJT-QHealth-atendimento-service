@@ -64,7 +64,7 @@ class AtendimentoListenerTest {
     }
 
     @Test
-    void deveProcessarMensagemEChamarTodosOsServicosCorretamente() {
+    void deveProcessarMensagemEChamarTodosOsServicosCorretamenteParaPacienteSemPrioridade() {
         // Arrange (Configuração dos Mocks)
 
         // Mock da criação da Anamnese
@@ -72,18 +72,7 @@ class AtendimentoListenerTest {
         when(anamneseService.criarAnamnese(any(AnamneseRequest.class))).thenReturn(ResponseEntity.ok(anamneseId));
 
         // Mock da busca do Paciente
-        PacienteResponse pacienteResponse = new PacienteResponse(
-            UUID.randomUUID(),
-            "John Doe",
-            "john.doe@example.com",
-            "johndoe",
-            "12345678900",
-            "M",
-            "+5511999999999",
-            LocalDate.of(1990, 1, 1),
-            LocalDateTime.now(),
-            LocalDateTime.now()
-        );
+        PacienteResponse pacienteResponse = mockPacienteResponse();
         when(pacienteService.buscarPacientePorId(anyString())).thenReturn(ResponseEntity.ok(pacienteResponse));
 
         // Mock da definição da Triagem (não preferencial, neste caso)
@@ -91,11 +80,11 @@ class AtendimentoListenerTest {
         when(triagemService.definirTriagem(any())).thenReturn(ResponseEntity.ok(triagemResponse));
 
         // Mock da escolha da Fila
-        FilaDto filaDto = new FilaDto(UUID.randomUUID(), UUID.randomUUID(), "atendimento.ubs-1", "NORMAL", LocalDateTime.now(), LocalDateTime.now());
+        FilaDto filaDto = mockFilaDto();
         when(filaService.buscarFilaPorNomeFila(contains("atendimento.ubs-"))).thenReturn(filaDto);
 
         // Mock do salvamento do Atendimento
-        AtendimentoDto atendimentoDto = new AtendimentoDto(UUID.randomUUID(), "12345678900", anamneseId, LocalDateTime.now(), LocalDateTime.now());
+        AtendimentoDto atendimentoDto = mockAtendimentoDto(anamneseId);
         when(atendimentoService.salvarAtendimento(any(), any())).thenReturn(atendimentoDto);
 
         // Mock do Producer (apenas para garantir que ele é chamado)
@@ -111,5 +100,67 @@ class AtendimentoListenerTest {
         verify(filaService, times(1)).buscarFilaPorNomeFila(anyString());
         verify(atendimentoService, times(1)).salvarAtendimento(any(), eq(filaDto));
         verify(atendimentoProducer, times(1)).enviarAtendimentoParaFila(any(), eq(filaDto.nomeFila()), eq(filaDto.nomeFila()), anyString());
+    }
+
+    @Test
+    void deveProcessarMensagemEChamarTodosOsServicosCorretamenteParaPacienteComPrioridade() {
+        // Arrange (Configuração dos Mocks)
+
+        // Mock da criação da Anamnese
+        UUID anamneseId = UUID.randomUUID();
+        when(anamneseService.criarAnamnese(any(AnamneseRequest.class))).thenReturn(ResponseEntity.ok(anamneseId));
+
+        // Mock da busca do Paciente
+        PacienteResponse pacienteResponse = mockPacienteResponse();
+        when(pacienteService.buscarPacientePorId(anyString())).thenReturn(ResponseEntity.ok(pacienteResponse));
+
+        // Mock da definição da Triagem (não preferencial, neste caso)
+        TriagemResponse triagemResponse = new TriagemResponse(true);
+        when(triagemService.definirTriagem(any())).thenReturn(ResponseEntity.ok(triagemResponse));
+
+        // Mock da escolha da Fila
+        FilaDto filaDto = mockFilaDto();
+        when(filaService.buscarFilaPorNomeFila(contains("atendimento.ubs-"))).thenReturn(filaDto);
+
+        // Mock do salvamento do Atendimento
+        AtendimentoDto atendimentoDto = mockAtendimentoDto(anamneseId);
+        when(atendimentoService.salvarAtendimento(any(), any())).thenReturn(atendimentoDto);
+
+        // Mock do Producer (apenas para garantir que ele é chamado)
+        doNothing().when(atendimentoProducer).enviarAtendimentoParaFila(any(), any(), any(), any());
+
+        // Act (Execução do método a ser testado)
+        atendimentoListener.escutarMensagem(requestJson);
+
+        // Assert (Verificação das interações)
+        verify(anamneseService, times(1)).criarAnamnese(any(AnamneseRequest.class));
+        verify(pacienteService, times(1)).buscarPacientePorId("12345678900");
+        verify(triagemService, times(1)).definirTriagem(any());
+        verify(filaService, times(1)).buscarFilaPorNomeFila(anyString());
+        verify(atendimentoService, times(1)).salvarAtendimento(any(), eq(filaDto));
+        verify(atendimentoProducer, times(1)).enviarAtendimentoParaFila(any(), eq(filaDto.nomeFila()), eq(filaDto.nomeFila()), anyString());
+    }
+
+    private static AtendimentoDto mockAtendimentoDto(UUID anamneseId) {
+        return new AtendimentoDto(UUID.randomUUID(), "12345678900", anamneseId, LocalDateTime.now(), LocalDateTime.now());
+    }
+
+    private static PacienteResponse mockPacienteResponse() {
+        return new PacienteResponse(
+            UUID.randomUUID(),
+            "John Doe",
+            "john.doe@example.com",
+            "johndoe",
+            "12345678900",
+            "M",
+            "+5511999999999",
+            LocalDate.of(1990, 1, 1),
+            LocalDateTime.now(),
+            LocalDateTime.now()
+        );
+    }
+
+    private static FilaDto mockFilaDto() {
+        return new FilaDto(UUID.randomUUID(), UUID.randomUUID(), "atendimento.ubs-1", "NORMAL", LocalDateTime.now(), LocalDateTime.now());
     }
 }
