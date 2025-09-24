@@ -1,4 +1,4 @@
-package br.com.fiap.qhealth.ms.atendimento_service.entity;
+package br.com.fiap.qhealth.ms.atendimento_service.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,7 +15,7 @@ import static jakarta.persistence.GenerationType.AUTO;
 @Getter
 @AllArgsConstructor
 @Builder
-public class FilaEntity {
+public class Fila {
 
     @Id
     @GeneratedValue(strategy = AUTO)

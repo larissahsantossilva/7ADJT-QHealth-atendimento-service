@@ -1,7 +1,7 @@
 package br.com.fiap.qhealth.ms.atendimento_service.service;
 
-import br.com.fiap.qhealth.ms.atendimento_service.model.FilaDto;
-import br.com.fiap.qhealth.ms.atendimento_service.entity.FilaEntity;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDto;
+import br.com.fiap.qhealth.ms.atendimento_service.model.Fila;
 import br.com.fiap.qhealth.ms.atendimento_service.repository.FilaRepository;
 import br.com.fiap.qhealth.ms.atendimento_service.utils.FilaUtils;
 import lombok.RequiredArgsConstructor;
@@ -23,24 +23,24 @@ public class FilaService {
     public final FilaRepository filaRepository;
 
     public FilaDto salvarFila(FilaDto fila) {
-        FilaEntity filaEntity = filaRepository.save(converterParaFila(fila));
+        Fila filaEntity = filaRepository.save(converterParaFila(fila));
         logger.info("Fila salva com sucesso: {}", filaEntity);
         return converterParaFilaDTO(filaEntity);
     }
 
     public FilaDto buscarFila(UUID idFila){
-        Optional<FilaEntity> filaEntity = filaRepository.findById(idFila);
+        Optional<Fila> filaEntity = filaRepository.findById(idFila);
         return converterParaFilaDTO(filaEntity.get());
     }
 
     public List<FilaDto> buscarFilas(){
-        List<FilaEntity> filas = filaRepository.findAll();
+        List<Fila> filas = filaRepository.findAll();
         List<FilaDto> list = filas.stream().map(FilaUtils::converterParaFilaDTO).toList();
         return list;
     }
 
     public FilaDto buscarFilaPorNomeFila(String nomeFila){
-        FilaEntity fila = filaRepository.findByNomeFila(nomeFila);
+        Fila fila = filaRepository.findByNomeFila(nomeFila);
         return converterParaFilaDTO(fila);
     }
 }

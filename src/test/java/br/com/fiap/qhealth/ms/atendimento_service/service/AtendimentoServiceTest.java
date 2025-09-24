@@ -1,8 +1,8 @@
 package br.com.fiap.qhealth.ms.atendimento_service.service;
 
-import br.com.fiap.qhealth.ms.atendimento_service.entity.AtendimentoEntity;
-import br.com.fiap.qhealth.ms.atendimento_service.model.AtendimentoDto;
-import br.com.fiap.qhealth.ms.atendimento_service.model.FilaDto;
+import br.com.fiap.qhealth.ms.atendimento_service.model.Atendimento;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.AtendimentoDto;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDto;
 import br.com.fiap.qhealth.ms.atendimento_service.repository.AtendimentoRepository;
 import br.com.fiap.qhealth.ms.atendimento_service.utils.AtendimentoUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,9 +36,9 @@ public class AtendimentoServiceTest {
 
         AtendimentoDto dto = new AtendimentoDto(id, cpf, anamneseId, now, now);
         FilaDto filaDto = new FilaDto(filaId, UUID.randomUUID(), "Fila Teste", "Normal", now, now);
-        AtendimentoEntity entity = AtendimentoUtils.converterParaAtendimento(dto, filaDto);
+        Atendimento entity = AtendimentoUtils.converterParaAtendimento(dto, filaDto);
 
-        when(atendimentoRepository.save(any(AtendimentoEntity.class))).thenReturn(entity);
+        when(atendimentoRepository.save(any(Atendimento.class))).thenReturn(entity);
 
         AtendimentoDto result = atendimentoService.salvarAtendimento(dto, filaDto);
 
@@ -54,7 +54,7 @@ public class AtendimentoServiceTest {
         String cpf = "12345678900";
         LocalDateTime now = LocalDateTime.now();
 
-        AtendimentoEntity entity = AtendimentoEntity.builder()
+        Atendimento entity = Atendimento.builder()
                 .id(id)
                 .idAnamnese(anamneseId)
                 .cpf(cpf)

@@ -1,8 +1,8 @@
 package br.com.fiap.qhealth.ms.atendimento_service.listener;
 
 import br.com.fiap.qhealth.ms.atendimento_service.configuration.RabbitMQConfiguration;
-import br.com.fiap.qhealth.ms.atendimento_service.model.AtendimentoDto;
-import br.com.fiap.qhealth.ms.atendimento_service.model.FilaDto;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.AtendimentoDto;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDto;
 import br.com.fiap.qhealth.ms.atendimento_service.external.anamnese.request.AnamneseRequest;
 import br.com.fiap.qhealth.ms.atendimento_service.external.paciente.response.PacienteResponse;
 import br.com.fiap.qhealth.ms.atendimento_service.external.triagem.request.TriagemAnamneseRequest;

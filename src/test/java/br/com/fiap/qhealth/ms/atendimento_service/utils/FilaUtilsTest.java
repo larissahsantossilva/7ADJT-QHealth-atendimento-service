@@ -1,7 +1,7 @@
 package br.com.fiap.qhealth.ms.atendimento_service.utils;
 
-import br.com.fiap.qhealth.ms.atendimento_service.model.FilaDto;
-import br.com.fiap.qhealth.ms.atendimento_service.entity.FilaEntity;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDto;
+import br.com.fiap.qhealth.ms.atendimento_service.model.Fila;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -21,7 +21,7 @@ public class FilaUtilsTest {
 
         FilaDto filaDto = new FilaDto(id, unidadeId, nome, tipo, now, now);
 
-        FilaEntity entity = FilaUtils.converterParaFila(filaDto);
+        Fila entity = FilaUtils.converterParaFila(filaDto);
 
         assertEquals(id, entity.getId());
         assertEquals(unidadeId, entity.getIdUnidadeSaude());
@@ -39,7 +39,7 @@ public class FilaUtilsTest {
         String tipo = "Normal";
         LocalDateTime now = LocalDateTime.now();
 
-        FilaEntity entity = FilaEntity.builder()
+        Fila entity = Fila.builder()
                 .id(id)
                 .idUnidadeSaude(unidadeId)
                 .nomeFila(nome)

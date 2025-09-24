@@ -1,7 +1,6 @@
 package br.com.fiap.qhealth.ms.atendimento_service.service;
 
 import br.com.fiap.qhealth.ms.atendimento_service.external.ubs.response.EnderecoResponse;
-import br.com.fiap.qhealth.ms.atendimento_service.model.FilaDto;
 import br.com.fiap.qhealth.ms.atendimento_service.external.ubs.response.UnidadeSaudeResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
