@@ -21,7 +21,6 @@ public class AtendimentoListener {
     public void escutarMensagem(AtendimentoRequestJson atendimentoRequestJson) {
         log.info(">>> Mensagem recebida da fila [{}]: '{}'", QUEUE_NOVO_ATENDIMENTO, atendimentoRequestJson);
         try {
-            // Delega todo o processamento para o serviço dedicado
             processamentoService.processarNovoAtendimento(atendimentoRequestJson);
         } catch (Exception e) {
             log.error("!!! Falha ao processar a mensagem de atendimento para o CPF {}: {}", atendimentoRequestJson.cpf(), e.getMessage());
