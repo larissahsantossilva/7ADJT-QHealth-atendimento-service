@@ -25,7 +25,6 @@ public class AtendimentoListener {
             processamentoService.processarNovoAtendimento(atendimentoRequestJson);
         } catch (Exception e) {
             log.error("!!! Falha ao processar a mensagem de atendimento para o CPF {}: {}", atendimentoRequestJson.cpf(), e.getMessage());
-            // Aqui, você poderia adicionar uma lógica para enviar a mensagem para uma Dead Letter Queue (DLQ)
         }
     }
 }
