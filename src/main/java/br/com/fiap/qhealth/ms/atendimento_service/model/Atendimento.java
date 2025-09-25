@@ -12,6 +12,7 @@ import java.util.UUID;
 @Table(name = "atendimento", schema = "atendimento")
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Atendimento {
 

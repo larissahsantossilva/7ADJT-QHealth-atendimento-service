@@ -47,6 +47,18 @@ services:
       - atendimento_receiver_pgdata:/var/lib/postgresql/data
     restart: always
 
+  atendimento-finalizado-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: atendimento_finalizado_db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5436:5432"
+    volumes:
+      - atendimento_finalizado_pgdata:/var/lib/postgresql/data
+    restart: always
+
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq_pedido
@@ -93,6 +105,13 @@ services:
       - "8081:8080"
     restart: always
 
+  triagem:
+    image: larissahsilva/qhealth-triagem:latest
+    container_name: triagem
+    ports:
+      - "8082:8080"
+    restart: always
+
   atendimento-receiver:
     image: dsouzajm/qhealth-receiver:latest
     container_name: atendimento_receiver
@@ -112,11 +131,23 @@ services:
       - "8083:8080"
     restart: always
 
-  triagem:
-    image: larissahsilva/qhealth-triagem:latest
-    container_name: triagem
+  atendimento-finalizado:
+    image: dsouzajm/qhealth-atendimento-finalizado:latest
+    container_name: atendimento_finalizado
+    depends_on:
+      - atendimento-finalizado-db
+    environment:
+      POSTGRES_HOST: atendimento-finalizado-db
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: atendimento_finalizado_db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      RABBITMQ_USER: ${RABBITMQ_USER}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASS}
+      RABBITMQ_PORT: 5672
+      RABBITMQ_HOST: rabbitmq
     ports:
-      - "8082:8080"
+      - "8085:8080"
     restart: always
 
   atendimento-service:
@@ -129,6 +160,7 @@ services:
       - atendimento-usuario
       - atendimento-receiver
       - triagem
+      - atendimento-finalizado
     ports:
       - "8084:8080"
       - "5005:5005"
@@ -155,3 +187,4 @@ volumes:
   ubs_pgdata:
   atendimento_usuario_pgdata:
   atendimento_receiver_pgdata:
+  atendimento_finalizado_pgdata:

@@ -14,6 +14,7 @@ import static jakarta.persistence.GenerationType.AUTO;
 @Table(name = "fila", schema = "atendimento")
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Fila {
 

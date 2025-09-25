@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfiguration {
+
     public static final String QUEUE_NOVO_ATENDIMENTO = "novo.atendimento.queue";
     public static final String ROUTING_KEY_NOVO_ATENDIMENTO = "novo.atendimento";
 
