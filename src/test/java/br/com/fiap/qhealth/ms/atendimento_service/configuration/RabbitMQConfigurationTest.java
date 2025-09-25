@@ -23,14 +23,11 @@ class RabbitMQConfigurationTest {
 
     @Test
     void deveCarregarContextoComConfiguracaoRabbitMQ() {
-        // Este teste passa simplesmente se a aplicação conseguir carregar o contexto
-        // com a classe de configuração, o que valida a sintaxe e a injeção de dependências.
         assertThat(context).isNotNull();
     }
 
     @Test
     void deveCriarBeanParaTodasAsFilas() {
-        // Verifica se cada bean de Queue foi criado
         assertThat(context.getBean("novoAtendimentoQueue", Queue.class)).isNotNull();
         assertThat(context.getBean("atendimentoUbs1Usual", Queue.class)).isNotNull();
         assertThat(context.getBean("atendimentoUbs1Preferencial", Queue.class)).isNotNull();
@@ -62,7 +59,6 @@ class RabbitMQConfigurationTest {
 
     @Test
     void deveCriarTodosOsBindings() {
-        // Verifica se cada bean de Binding foi criado
         assertThat(context.getBean("atendimentoUbs1UsualBinding")).isInstanceOf(Binding.class);
         assertThat(context.getBean("atendimentoUbs1PreferencialBinding")).isInstanceOf(Binding.class);
         assertThat(context.getBean("atendimentoUbs2UsualBinding")).isInstanceOf(Binding.class);
@@ -71,7 +67,6 @@ class RabbitMQConfigurationTest {
 
     @Test
     void deveCriarBeanParaMessageConverter() {
-        // Verifica se o conversor de mensagens JSON foi criado
         assertThat(context.getBean("jsonMessageConverter")).isInstanceOf(MessageConverter.class);
     }
 }

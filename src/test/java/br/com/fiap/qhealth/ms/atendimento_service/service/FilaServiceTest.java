@@ -1,7 +1,7 @@
 package br.com.fiap.qhealth.ms.atendimento_service.service;
 
-import br.com.fiap.qhealth.ms.atendimento_service.entity.FilaEntity;
-import br.com.fiap.qhealth.ms.atendimento_service.model.FilaDto;
+import br.com.fiap.qhealth.ms.atendimento_service.model.Fila;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDto;
 import br.com.fiap.qhealth.ms.atendimento_service.repository.FilaRepository;
 import br.com.fiap.qhealth.ms.atendimento_service.utils.FilaUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,9 +35,9 @@ public class FilaServiceTest {
         LocalDateTime now = LocalDateTime.now();
 
         FilaDto filaDto = new FilaDto(id, unidadeId, nome, tipo, now, now);
-        FilaEntity entity = FilaUtils.converterParaFila(filaDto);
+        Fila entity = FilaUtils.converterParaFila(filaDto);
 
-        when(filaRepository.save(any(FilaEntity.class))).thenReturn(entity);
+        when(filaRepository.save(any(Fila.class))).thenReturn(entity);
 
         FilaDto result = filaService.salvarFila(filaDto);
 
@@ -48,7 +48,7 @@ public class FilaServiceTest {
     @Test
     void testBuscarFila() {
         UUID id = UUID.randomUUID();
-        FilaEntity entity = FilaEntity.builder().id(id).nomeFila("Fila Teste").build();
+        Fila entity = Fila.builder().id(id).nomeFila("Fila Teste").build();
 
         when(filaRepository.findById(id)).thenReturn(Optional.of(entity));
 
@@ -60,7 +60,7 @@ public class FilaServiceTest {
 
     @Test
     void testBuscarFilas() {
-        FilaEntity entity = FilaEntity.builder().id(UUID.randomUUID()).nomeFila("Fila Teste").build();
+        Fila entity = Fila.builder().id(UUID.randomUUID()).nomeFila("Fila Teste").build();
         when(filaRepository.findAll()).thenReturn(List.of(entity));
 
         List<FilaDto> result = filaService.buscarFilas();
@@ -72,7 +72,7 @@ public class FilaServiceTest {
     @Test
     void testBuscarFilaPorNomeFila() {
         String nome = "Fila Teste";
-        FilaEntity entity = FilaEntity.builder().id(UUID.randomUUID()).nomeFila(nome).build();
+        Fila entity = Fila.builder().id(UUID.randomUUID()).nomeFila(nome).build();
 
         when(filaRepository.findByNomeFila(nome)).thenReturn(entity);
 

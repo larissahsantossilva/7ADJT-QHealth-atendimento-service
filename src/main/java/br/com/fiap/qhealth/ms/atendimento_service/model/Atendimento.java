@@ -1,4 +1,4 @@
-package br.com.fiap.qhealth.ms.atendimento_service.entity;
+package br.com.fiap.qhealth.ms.atendimento_service.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,8 +12,9 @@ import java.util.UUID;
 @Table(name = "atendimento", schema = "atendimento")
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class AtendimentoEntity {
+public class Atendimento {
 
     @Id
     @Column(name = "id", nullable = false, unique = true)
@@ -23,7 +24,7 @@ public class AtendimentoEntity {
     private String cpf;
 
     @Column(name = "anamnese_id", nullable = false)
-    private UUID idAnamnese;
+    private UUID anamneseId;
 
     @CreationTimestamp
     @Column(name = "data_criacao", nullable = false, updatable = false)
@@ -35,5 +36,5 @@ public class AtendimentoEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fila_id", nullable = false)
-    private FilaEntity fila;
+    private Fila fila;
 }

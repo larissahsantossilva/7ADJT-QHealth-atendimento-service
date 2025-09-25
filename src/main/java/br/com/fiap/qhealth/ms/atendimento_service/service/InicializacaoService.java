@@ -1,6 +1,6 @@
 package br.com.fiap.qhealth.ms.atendimento_service.service;
 
-import br.com.fiap.qhealth.ms.atendimento_service.model.FilaDto;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDto;
 import br.com.fiap.qhealth.ms.atendimento_service.external.ubs.response.UnidadeSaudeResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

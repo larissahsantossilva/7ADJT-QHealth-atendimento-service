@@ -1,14 +1,14 @@
 package br.com.fiap.qhealth.ms.atendimento_service.utils;
 
-import br.com.fiap.qhealth.ms.atendimento_service.model.FilaDto;
-import br.com.fiap.qhealth.ms.atendimento_service.entity.FilaEntity;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDto;
+import br.com.fiap.qhealth.ms.atendimento_service.model.Fila;
 
 public class FilaUtils {
 
-    public static FilaEntity converterParaFila(FilaDto filaDTO) {
-        return FilaEntity.builder()
+    public static Fila converterParaFila(FilaDto filaDTO) {
+        return Fila.builder()
                 .id(filaDTO.id())
-                .idUnidadeSaude(filaDTO.idUnidadeSaude())
+                .unidadeSaudeId(filaDTO.unidadeSaudeId())
                 .nomeFila(filaDTO.nomeFila())
                 .tipoFila(filaDTO.tipoFila())
                 .dataCriacao(filaDTO.dataCriacao())
@@ -16,10 +16,10 @@ public class FilaUtils {
             .build();
     }
 
-    public static FilaDto converterParaFilaDTO(FilaEntity fila) {
+    public static FilaDto converterParaFilaDTO(Fila fila) {
         return new FilaDto(
             fila.getId(),
-            fila.getIdUnidadeSaude(),
+            fila.getUnidadeSaudeId(),
             fila.getNomeFila(),
             fila.getTipoFila(),
             fila.getDataCriacao(),

@@ -1,4 +1,4 @@
-package br.com.fiap.qhealth.ms.atendimento_service.entity;
+package br.com.fiap.qhealth.ms.atendimento_service.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,8 +14,9 @@ import static jakarta.persistence.GenerationType.AUTO;
 @Table(name = "fila", schema = "atendimento")
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class FilaEntity {
+public class Fila {
 
     @Id
     @GeneratedValue(strategy = AUTO)
@@ -23,7 +24,7 @@ public class FilaEntity {
     private UUID id;
 
     @Column(name = "unidade_saude_id", nullable = false)
-    private UUID idUnidadeSaude;
+    private UUID unidadeSaudeId;
 
     @Column(name = "nome_fila", nullable = false)
     private String nomeFila;

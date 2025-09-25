@@ -1,8 +1,8 @@
 package br.com.fiap.qhealth.ms.atendimento_service.utils;
 
-import br.com.fiap.qhealth.ms.atendimento_service.model.AtendimentoDto;
-import br.com.fiap.qhealth.ms.atendimento_service.model.FilaDto;
-import br.com.fiap.qhealth.ms.atendimento_service.entity.AtendimentoEntity;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.AtendimentoDto;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDto;
+import br.com.fiap.qhealth.ms.atendimento_service.model.Atendimento;
 import br.com.fiap.qhealth.ms.atendimento_service.listener.json.AtendimentoRequestJson;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +28,7 @@ public class AtendimentoUtilsTest {
 
         assertEquals(id, dto.id());
         assertEquals(cpf, dto.cpf());
-        assertEquals(anamneseId, dto.idAnamnese());
+        assertEquals(anamneseId, dto.anamneseId());
         assertEquals(now, dto.dataCriacao());
         assertEquals(now, dto.dataUltimaAlteracao());
     }
@@ -44,10 +44,10 @@ public class AtendimentoUtilsTest {
         AtendimentoDto dto = new AtendimentoDto(id, cpf, anamneseId, now, now);
         FilaDto filaDto = new FilaDto(filaId, UUID.randomUUID(), "Fila Teste", "Normal", now, now);
 
-        AtendimentoEntity entity = AtendimentoUtils.converterParaAtendimento(dto, filaDto);
+        Atendimento entity = AtendimentoUtils.converterParaAtendimento(dto, filaDto);
 
         assertEquals(id, entity.getId());
-        assertEquals(anamneseId, entity.getIdAnamnese());
+        assertEquals(anamneseId, entity.getAnamneseId());
         assertEquals(cpf, entity.getCpf());
         assertEquals(now, entity.getDataCriacao());
         assertEquals(now, entity.getDataUltimaAlteracao());
@@ -61,9 +61,9 @@ public class AtendimentoUtilsTest {
         String cpf = "12345678900";
         LocalDateTime now = LocalDateTime.now();
 
-        AtendimentoEntity entity = AtendimentoEntity.builder()
+        Atendimento entity = Atendimento.builder()
                 .id(id)
-                .idAnamnese(anamneseId)
+                .anamneseId(anamneseId)
                 .cpf(cpf)
                 .dataCriacao(now)
                 .dataUltimaAlteracao(now)
@@ -72,7 +72,7 @@ public class AtendimentoUtilsTest {
         AtendimentoDto dto = AtendimentoUtils.converterParaAtendimentoDTO(entity);
 
         assertEquals(id, dto.id());
-        assertEquals(anamneseId, dto.idAnamnese());
+        assertEquals(anamneseId, dto.anamneseId());
         assertEquals(cpf, dto.cpf());
         assertEquals(now, dto.dataCriacao());
         assertEquals(now, dto.dataUltimaAlteracao());

@@ -1,8 +1,8 @@
 package br.com.fiap.qhealth.ms.atendimento_service.utils;
 
-import br.com.fiap.qhealth.ms.atendimento_service.model.AtendimentoDto;
-import br.com.fiap.qhealth.ms.atendimento_service.model.FilaDto;
-import br.com.fiap.qhealth.ms.atendimento_service.entity.AtendimentoEntity;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.AtendimentoDto;
+import br.com.fiap.qhealth.ms.atendimento_service.dto.FilaDto;
+import br.com.fiap.qhealth.ms.atendimento_service.model.Atendimento;
 import br.com.fiap.qhealth.ms.atendimento_service.listener.json.AtendimentoRequestJson;
 
 import java.util.UUID;
@@ -19,10 +19,10 @@ public class AtendimentoUtils {
         );
     }
 
-    public static AtendimentoEntity converterParaAtendimento(AtendimentoDto atendimentoDTO, FilaDto filaDTO) {
-        return AtendimentoEntity.builder()
+    public static Atendimento converterParaAtendimento(AtendimentoDto atendimentoDTO, FilaDto filaDTO) {
+        return Atendimento.builder()
                 .id(atendimentoDTO.id())
-                .idAnamnese(atendimentoDTO.idAnamnese())
+                .anamneseId(atendimentoDTO.anamneseId())
                 .cpf(atendimentoDTO.cpf())
                 .fila(FilaUtils.converterParaFila(filaDTO))
                 .dataCriacao(atendimentoDTO.dataCriacao())
@@ -30,11 +30,11 @@ public class AtendimentoUtils {
             .build();
     }
 
-    public static AtendimentoDto converterParaAtendimentoDTO(AtendimentoEntity atendimento) {
+    public static AtendimentoDto converterParaAtendimentoDTO(Atendimento atendimento) {
         return new AtendimentoDto(
             atendimento.getId(),
             atendimento.getCpf(),
-            atendimento.getIdAnamnese(),
+            atendimento.getAnamneseId(),
             atendimento.getDataCriacao(),
             atendimento.getDataUltimaAlteracao()
         );
