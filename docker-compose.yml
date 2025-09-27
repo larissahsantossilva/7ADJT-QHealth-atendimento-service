@@ -132,7 +132,7 @@ services:
     restart: always
 
   atendimento-finalizado:
-    image: dsouzajm/qhealth-atendimento-finalizado:latest
+    image: gomesfg/qhealth-atendimento-finalizado:latest
     container_name: atendimento_finalizado
     depends_on:
       - atendimento-finalizado-db
